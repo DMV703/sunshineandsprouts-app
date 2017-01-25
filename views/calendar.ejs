@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sunshine and Sprout Daycare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+    <link rel='stylesheet' href='/stylesheets/calendar.css' />
+    <link rel="stylesheet" href="http:/stylesheets/jquerysctipttop.css">
+    <link rel="stylesheet" href="/stylesheets/drum.css">
+    <link rel="stylesheet" href="/stylesheets/datetime_picker.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/jquery.3.1.1.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/jquery.backstretch.min.js"></script>
+    <script src="/javascripts/common.js"></script>
+    <script src="/javascripts/hammer.min.js"></script>
+    <script src="/javascripts/hammer.fakemultitouch.js"></script>
+    <script src="/javascripts/drum.js"></script>
+
+</head>
+
+<body >
+<div class="container">
+<!-- Form to add Note  -->
+    <div class="modal fade" id="error-dialog" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Information</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Please Input a Keyword.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--Event Setting Dialog-->
+    <div class="modal fade" id="eventDialog" role="dialog" style="display: none;z-index: 9999;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="div-tab-header">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a class="tab-header" data-toggle="tab" href="#date_time">Date & Time</a></li>
+                            <li><a class="tab-header" data-toggle="tab" href="#reason">Reason</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content">
+                        <!--sellecting of Date & Time-->
+                        <div id="date_time" class="tab-pane fade in active">
+                            <!--Date & Time Picker-->
+                            <div class="date_wrapper outside">
+                                <!--<div class="date_header"> <span class="title">Date Time:</span> <span class="selection"></span> </div>-->
+                                <div class="row" id="picker-body">
+                                    <form name="date">
+                                        <div class="lines"><div>:</div></div>
+                                        <select class="date" id="month" name="month">
+                                            <option value="0">January</option>
+                                            <option value="1">February</option>
+                                            <option value="2">March</option>
+                                            <option value="3">April</option>
+                                            <option value="4">May</option>
+                                            <option value="5">June</option>
+                                            <option value="6">July</option>
+                                            <option value="7">August</option>
+                                            <option value="8">September</option>
+                                            <option value="9">October</option>
+                                            <option value="10">November</option>
+                                            <option value="11">December</option>
+                                        </select>
+                                        <select class="date" id="date" name="date">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                            <option value="18">18</option>
+                                            <option value="19">19</option>
+                                            <option value="20">20</option>
+                                            <option value="21">21</option>
+                                            <option value="22">22</option>
+                                            <option value="23">23</option>
+                                            <option value="24">24</option>
+                                            <option value="25">25</option>
+                                            <option value="26">26</option>
+                                            <option value="27">27</option>
+                                            <option value="28">28</option>
+                                            <option value="29">29</option>
+                                            <option value="30">30</option>
+                                            <option value="31">31</option>
+                                        </select>
+                                        <select class="date" id="fullYear" name="fullYear">
+                                            <option value="2011">2011</option>
+                                            <option value="2012">2012</option>
+                                            <option value="2013">2013</option>
+                                            <option value="2014">2014</option>
+                                            <option value="2015">2015</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2017">2017</option>
+                                            <option value="2018">2018</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                        </select>
+                                        <select class="date" id="hours" name="hours">
+                                            <option value="0">00</option>
+                                            <option value="1">01</option>
+                                            <option value="2">02</option>
+                                            <option value="3">03</option>
+                                            <option value="4">04</option>
+                                            <option value="5">05</option>
+                                            <option value="6">06</option>
+                                            <option value="7">07</option>
+                                            <option value="8">08</option>
+                                            <option value="9">09</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                            <option value="18">18</option>
+                                            <option value="19">19</option>
+                                            <option value="20">20</option>
+                                            <option value="21">21</option>
+                                            <option value="22">22</option>
+                                            <option value="23">23</option>
+                                        </select>
+                                        <select class="date" id="minutes" name="minutes">
+                                            <option value="0">00</option>
+                                            <option value="1">01</option>
+                                            <option value="2">02</option>
+                                            <option value="3">03</option>
+                                            <option value="4">04</option>
+                                            <option value="5">05</option>
+                                            <option value="6">06</option>
+                                            <option value="7">07</option>
+                                            <option value="8">08</option>
+                                            <option value="9">09</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                            <option value="18">18</option>
+                                            <option value="19">19</option>
+                                            <option value="20">20</option>
+                                            <option value="21">21</option>
+                                            <option value="22">22</option>
+                                            <option value="23">23</option>
+                                            <option value="24">24</option>
+                                            <option value="25">25</option>
+                                            <option value="26">26</option>
+                                            <option value="27">27</option>
+                                            <option value="28">28</option>
+                                            <option value="29">29</option>
+                                            <option value="30">30</option>
+                                            <option value="31">31</option>
+                                            <option value="32">32</option>
+                                            <option value="33">33</option>
+                                            <option value="34">34</option>
+                                            <option value="35">35</option>
+                                            <option value="36">36</option>
+                                            <option value="37">37</option>
+                                            <option value="38">38</option>
+                                            <option value="39">39</option>
+                                            <option value="40">40</option>
+                                            <option value="41">41</option>
+                                            <option value="42">42</option>
+                                            <option value="43">43</option>
+                                            <option value="44">44</option>
+                                            <option value="45">45</option>
+                                            <option value="46">46</option>
+                                            <option value="47">47</option>
+                                            <option value="48">48</option>
+                                            <option value="49">49</option>
+                                            <option value="50">50</option>
+                                            <option value="51">51</option>
+                                            <option value="52">52</option>
+                                            <option value="53">53</option>
+                                            <option value="54">54</option>
+                                            <option value="55">55</option>
+                                            <option value="56">56</option>
+                                            <option value="57">57</option>
+                                            <option value="58">58</option>
+                                            <option value="59">59</option>
+                                        </select>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row" id="picker-footer">
+                                <!--CSC = ConSeCutive-->
+                                <div class="row">
+                                    <label for="chkCSCday">
+                                        <input type="checkbox" id="chkCSCday">&nbsp;&nbsp;Consecutive Days
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <input name="CSCday" type="radio" id="rdoFirstDay" checked>&nbsp;&nbsp;
+                                    <span id="lblFirstday">First Day</span>
+                                </div>
+                                <div class="row">
+                                    <input name="CSCday" type="radio" id="rdoSecondDay">&nbsp;&nbsp;
+                                    <span id="lblSecondday">Second Day</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="reason" class="tab-pane fade">
+                            <section name="admin-side" style="display: none;">
+                                <div class="row" style="padding-right: 0px;">
+                                    <div class="col-xs-6">
+                                        <label for="open-delay">
+                                            <input type="radio" name="reason" class="reason" id="open-delay" value="0">
+                                            &nbsp;Opening Delay
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="close-early">
+                                            <input type="radio" name="reason" id="close-early" value="1">
+                                            &nbsp;Closing Early
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <label for="closing">
+                                            <input type="radio" name="reason" id="closing" value="2">
+                                            &nbsp;Closing
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="party">
+                                            <input type="radio" name="reason" id="party" value="3">
+                                            &nbsp;Party
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <label for="event">
+                                            <input type="radio" name="reason" id="event" value="4">
+                                            &nbsp;Event
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="other">
+                                            <input type="radio" name="reason" id="aother" value="5">
+                                            &nbsp;Other
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section name="parent-side" style="display: none;">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <label for="absent">
+                                            <input type="radio" name="reason" id="absent" value="0">
+                                            &nbsp;Absent
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="drop-late">
+                                            <input type="radio" name="reason" id="drop-late" value="1">
+                                            &nbsp;Drop Off Late
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <label for="pick-early">
+                                            <input type="radio" name="reason" id="pick-early" value="2">
+                                            &nbsp;Pick Up Early
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="other">
+                                            <input type="radio" name="reason" id="pother" value="3">
+                                            &nbsp;Other
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <section name="reason-note">
+                                <div class="row" id="row-title">
+                                    <div class="col-xs-2" style="padding: 2px 0px 2px 10px;">
+                                        <span id="lbl-title">Title</span>
+                                    </div>
+                                    <div class="col-xs-10" style="padding: 0px 5px 5px 5px;">
+                                        <input type="text" id="inp-title">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <textarea id="reason-note" maxlength="450" placeholder="Enter your message here.(450 Charater max)"></textarea>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnAllday" class="btn btn-custom" data-toggle="button" aria-pressed="false" autocomplete="off">All Day</button>
+                    <button type="button" id="btnSave" class="btn btn-custom"  data-dismiss="modal">Save</button>
+                    <button type="button" id="btnCancel" class="btn btn-custom" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<div id="div-head">
+    <div id="div-title">
+
+        <ul class="nav">
+            <li class="nav-item" id="home">
+                <button id="backBtn" onclick="location.href='/dashboard';">
+                    <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                    <!--<img src="/images/backbtn_blue.svg" >-->
+                </button>
+            </li>
+            <li class="nav-item" id="new">
+
+                <button id="eventBtn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#eventDialog">
+                <!--<button id="eventBtn" onclick="location.href='/event-setting';">-->
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <!--<img src="/images/plus_blue.png">-->
+                </button>
+            </li>
+            <li class="nav-item" id="search">
+                <div id="searchbox">
+                    <input type="text" id="word">
+                    <img id="btnsearch" src="/images/round_search_blue.png" style="float:right">
+                </div>
+
+                <!--<img id="btnsearch" src="/images/search-a.png">-->
+            </li>
+        </ul>
+    </div>
+
+    <div class="month">
+        <ul>
+            <li class="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <!--<i class="fa fa-angle-left" style="font-size:30px;color:#42b15b"></i>-->
+            </li>
+            <li class="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <!--<i class="fa fa-angle-right" style="font-size:30px;color:#42b15b"></i>-->
+            </li>
+            <li id="smonth" >  </li>
+        </ul>
+    </div>
+
+    <div  id="div-calendar" class ="div-calendar">
+        <ul class="weekdays">
+            <li>Sun</li> <li>Mon</li> <li>Tue</li> <li>Wed</li> <li>Thu</li> <li>Fri</li> <li>Sat</li>
+        </ul>
+
+        <ul class="days"></ul>
+    </div>
+
+    <div id="notify" style="display: none;width:100%; height:250px;background-color:#00b7ff;">
+        <br>
+        <h3 style="text-align: center" id="msg"></h3>
+        <button onclick="hide();" style="width:20%;height:30px;margin-left: 40%;">Close</button>
+        <br>
+    </div>
+</div>
+
+<div id="div-list">
+    <!--<table class="event-list"></table>-->
+    <div class="event-list"></div>
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+    $.backstretch("/images/bg.png");
+
+    //    var socket = io.connect("http://192.168.3.148:8080");
+    var nm = '<%=nname%>';
+    var grd = '<%=grade%>';
+    //    socket.emit('joinroom',{room:'geoloc', nickname:nm, grade: grd});
+    //
+    //    socket.on('notify', function (data) {
+    //        $('#msg').text(data.msg + " is on way.");
+    //        $('#notify').attr({'style':'display:block;background-color:#eaee9a'});
+    //        socket.emit('location', data);
+    //    });
+
+    var row_even = true;
+    var smonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nob','Dec'];
+
+    var currentmonth = new Date();
+    var cc = new Date();
+    var onmywayDown = false;
+    var selectedDateTime = "#lblFirstday";
+    var childname = '';
+    var date1='', time1='', date2='', time2='';
+
+    // *************************
+    //    DateTimePicker
+    //**************************
+    Hammer.plugins.fakeMultitouch();
+
+    function getIndexForValue(elem, value) {
+        for (var i=0; i<elem.options.length; i++)
+            if (elem.options[i].value == value)
+                return i;
+    }
+
+    function pad(number) {
+        if ( number < 10 ) {
+            return '0' + number;
+        }
+        return number;
+    }
+
+    function update(datetime) {
+        $("#date").drum('setIndex', datetime.getDate()-1);
+        $("#month").drum('setIndex', datetime.getMonth());
+        $("#fullYear").drum('setIndex', getIndexForValue($("#fullYear")[0], datetime.getFullYear()));
+        $("#hours").drum('setIndex', datetime.getHours());
+        $("#minutes").drum('setIndex', datetime.getMinutes());
+    }
+
+    //***********  DateTimPicker *********************
+    function initDateTimePicker(){
+        $('#chkCSCday').prop('checked', false);
+        $('#rdoFirstDay').prop('checked', true);
+        $('#rdoFirstDay').prop('disabled', true);
+        $('#rdoSecondDay').prop('disabled', true);
+        if($('#btnAllday').hasClass('active')){ $('#btnAllday').removeClass('active'); }
+        $('#lblFirstday').text('FirstDate');
+        $('#lblSecondday').text('SecondDate');
+        selectedDateTime = '#lblFirstday';
+        update(new Date());
+    }
+
+    function select_user_side() {
+        if(grd < 3) $("section[name='admin-side']").css('display', 'block');
+        else $("section[name='parent-side']").css('display', 'block');
+    }
+
+    //
+    function getChildName(){
+        $.ajax({
+            url:"/getChildList", type:"get", dataType:"JSON",
+            success : function(data){
+                if(data.length == 0 ){
+                    // msg to prompt to register child
+                    return;
+                }
+                if(data.length == 1) { // parent who registered child
+                    childname = data[0].child_name;
+                    var cc = childname.split(" ");
+                    if (cc.length > 1) {
+                        childname = cc[0] + " " + cc[1].substr(0, 1).toUpperCase() + ".";
+                    }
+                }else{  // staff
+                    childname = '';
+                }
+            },
+            error : function(xhr, status, error) { alert("error");}
+        })
+    }
+
+    $(document).ready(function() {
+        loadCalendar(currentmonth);
+        loadEvent(currentmonth);
+        getChildName();
+
+        initDateTimePicker();
+        select_user_side();
+
+        $("select.date").drum({
+            onChange : function (elem) {
+                var arr = {'date' : 'setDate', 'month' : 'setMonth', 'fullYear' : 'setFullYear', 'hours' : 'setHours', 'minutes' : 'setMinutes'};
+                var date = new Date();
+                for (var s in arr) {
+                    var i = ($("form[name='date'] select[name='" + s + "']"))[0].value;
+                    eval ("date." + arr[s] + "(" + i + ")");
+                }
+                date.setSeconds(0);
+                update(date);
+
+                var format = smonths[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear() + ' ' + date.getHours() + ':' + pad( date.getMinutes() );
+
+                $(selectedDateTime).text(format);
+                if(selectedDateTime == '#lblFirstday'){
+                    date1 = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+                    time1 = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+                }else{
+                    date2 = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+                    time2 = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+                }
+            }
+        });
+
+        update(new Date());
+    });
+
+    function onmyway(){
+        if (!onmywayDown){
+            onmywayDown = true;
+            $('#btnOnMyWay').attr({'style': 'background-image : url("/images/myway1.png")'})
+        }else{
+            onmywayDown = false;
+            $('#btnOnMyWay').attr({'style': 'background-image  : url("/images/myway.png")'})
+        }
+
+//            socket.emit('notify', { msg: nm});
+        location.href="/map";
+        return true;
+    }
+
+    function hide(){
+        $('#notify').attr({'style':'display:none'});
+    }
+
+    function datesinMonth(vdate){
+        var first = new Date(vdate.getFullYear(), vdate.getMonth(), 1, 0, 0, 0, 0);
+        var next =  new Date(vdate.getFullYear(), vdate.getMonth(), 1, 0, 0, 0, 0);
+        next.setMonth(next.getMonth()+1);
+
+        var diff = (next - first)/ 24 / 3600 / 1000 - 1;
+        return diff ;
+    }
+
+    function loadCalendar(vdate){
+        var year = vdate.getFullYear();
+        var month = vdate.getMonth();
+        var today = vdate.getDate();
+
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        $("#smonth").html(months[month]);
+
+        var first = new Date(year, month, 1, 0, 0, 0, 0);
+        var firstday = first.getDay();
+
+        if (firstday > 0) {
+            first.setDate(-firstday+1);
+        }
+
+        var days = datesinMonth(vdate);
+        var cells = days + firstday;
+        var weeks = 5;
+        if (cells % 7 > 0){
+            weeks = (cells-cells % 7)/7 + 1;
+        }else{
+            weeks = cells / 7;
+        }
+        cells = weeks * 7;
+        $(".days").empty();
+        for (i = 0; i < cells; i++) {
+            var date = first.getDate();
+            var id = (first.getMonth()+1) + '-' + first.getDate();
+
+            if(cc.toDateString() == first.toDateString()){
+                $(".days").append('<li><div id="today">' + date + "<div></li>");
+            }else if(i < firstday || i >= (firstday + days)) {
+                $(".days").append('<li><div class="prevday"' + ' id="'+ id + '">' + date + "</div></li>");
+            }else{
+                $(".days").append('<li><div id="' + id + '">' + date + "</div></li>");
+            }
+            first.setDate(date + 1);
+        }
+        $("#today").attr({"style" : "background-color: white; border:2px solid #f2ae43;padding:3px 0px 0px 0px;"});//ea7b04
+//            $("#today").attr({"style" : "background: #5193bf; color: white !important"});//ea7b04
+        $(".prevday").attr({"style" : "color:#8BB9E0"});
+
+        if(weeks == 5){
+            $('#div-list').attr({"style" : "padding-top:320px"});
+        }else{
+            $('#div-list').attr({"style" : "padding-top:350px"});
+        }
+    }
+
+    function loadEvent(vdate){
+        var year = vdate.getFullYear();
+        var month = vdate.getMonth();
+
+        var first = new Date(year, month, 1, 0, 0, 0, 0);
+        var firstday = first.getDay();
+
+        if (firstday > 0) { first.setDate(-firstday+1); }
+
+        var days = datesinMonth(vdate);
+        var cells = days + firstday;
+
+        if (cells * 7 > 0){ cells = ((cells - cells % 7)/7 + 1) * 7; }
+
+        var lastday = new Date(first);
+        lastday.setDate(lastday.getDate() + cells);
+
+        var sfirst = first.getFullYear() + '-' + (first.getMonth()+1) + '-' + first.getDate();
+        var slast = lastday.getFullYear() + '-' + (lastday.getMonth()+1) + '-' + lastday.getDate();
+
+        $(".event-list").empty();
+
+        var surl = "/get-event?firstday=" + sfirst + "&lastday=" + slast;
+        $.ajax({
+            url : surl,  dataType:"JSON", // option
+            success : function(data) {
+                var ss;
+                $.each(data, function(key, row){
+                    console.log(row);
+                    var stime = (row.mtime != null)? row.mtime: '';
+                    var sdate = (row.mdate != null)? row.mdate: '';
+                    var etime = (row.ntime != null)? row.ntime: '';
+                    var edate = (row.ndate != null)? row.ndate: '';
+                    var scont = (row.event != null)? row.event: '';
+                    var snote = (row.note != null)? row.note: '';
+                    var grade = (row.grade != null)? row.grade: '';
+                    var sd = "", ed = '', st = "", et = '';
+
+                    if( sdate != '') {
+                        sdate = getLocalDateString(sdate);
+                        ss = sdate.split('-');
+                        sd = ss[1] + '-' + ss[2];
+                    }
+
+                    if( edate != '') {
+                        edate = getLocalDateString(edate);
+                        ss = sdate.split('-');
+                        ed = ss[1] + '-' + ss[2];
+                    }
+
+                    if( stime != '') st = (stime == '00:00:00')?'All Day' : isoTime2Local(stime);
+
+                    if( etime != '') et = (etime == '00:00:00')?'All Day' : isoTime2Local(etime);
+
+                    if(st == et) et = '';  // time1 = time2 => dont show time2
+
+                    add_event(sdate, st, edate, et, scont, snote, key);
+
+                    var selector = '#'+sd;
+                    $(selector).attr({'style': 'background-color:white;color:#3e8acc;padding:5px 0px 0px 0px;'});
+                    if (grade == 3) {
+                        $(selector).css({'border': '2px solid #3e8acc'});
+                        $(selector).css({'padding': '2px 0px 0px 0px'});
+                    }
+                })
+            },
+            error : function(xhr, status, error) { console.log(error); }
+        });
+    }
+
+    function add_event(sdate, stime, edate, etime, scont, snote, id){
+        var shortMonth = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        var sdays = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+        if(sdate == '') return;
+        var snn = new Date(sdate);
+        var sdd = snn.getDate();
+        var smm = shortMonth[snn.getMonth()];
+        var sst = sdays[snn.getDay()] + " " + stime;
+
+        var edd='', emm='', est='';
+        if(edate != '') {
+            var enn = new Date(edate);
+            edd = enn.getDate();
+            emm = shortMonth[enn.getMonth()];
+            est = sdays[enn.getDay()] + " " + etime;
+            sdd += ' -';
+        }
+
+        // In left side, date cell
+        var shtml = '<span style="font-size:16px; float:left;">' + smm + ' ' + sdd + '</span>';
+
+        // if exist second date
+        if(edate != ''){
+            shtml += '<br><span style="font-size:16px;float:left;">' + emm + ' ' + edd + '</span>';
+        }
+
+        var secondLine = (sst != est && est !='')? sst + ' - ' + est : sst; // checking time1 = time2
+
+        var bgcolor = (row_even)? '#5292be' : '#7bbfe9';
+
+        row_even = !row_even;
+
+        var row = '<div style="background-color:' + bgcolor + ';">' + // row begin
+            '<div id="collapseBtn'+id+'" class="row btn visible-xs-block visible-sm-block"  data-toggle="collapse" data-target="#collapse-'+id+'">'+
+            // date
+            '<div class="col-sm-2 col-xs-3">' + shtml + '</div>' +
+            // event
+            '<div class="col-sm-8 col-xs-7">'+
+            '<span style="font-size:16px">' + scont +'</span><br>' +
+            '<span style="font-size:12px">' + secondLine +'</span>' +
+            '</div>';
+        // arrow icon
+        if(snote !=="") { // Only when note exist, add triangle and note
+            row += '<div class="col-sm-2 col-xs-2">' +
+                '<span class="glyphicon glyphicon-triangle-right" style="font-size:20px; color:white;"></span>' +
+                '</div>';
+        }
+        row +=  '</div>';
+        // event note
+        if(snote !=="") {// Only when note exist, add triangle and note
+            row += '<div class="collapse" id="collapse-' + id + '">' + snote +
+                '<span style="width:100%;"></span>' +
+                '</div>';
+        }
+        row += '</div>'; // row end
+
+        $(".event-list").append(row);
+
+        if (snote != '') // only when triangle icon exist
+            $("#collapseBtn"+id).on("click", function(){
+                var arrow = $(this).find("span.glyphicon");
+                if(arrow.attr("class") == "glyphicon glyphicon-triangle-right") {
+                    arrow.attr("class","glyphicon glyphicon-triangle-bottom");
+                }else{
+                    arrow.attr("class","glyphicon glyphicon-triangle-right");
+                }
+            })
+    }
+
+    $('#chkCSCday').click(function(){
+        if($(this).prop('checked')){
+            $('#rdoFirstDay').prop('checked', true);
+            $('#rdoFirstDay').prop('disabled', false);
+            $('#rdoSecondDay').prop('disabled', false);
+        }else{
+            $('#rdoFirstDay').prop('checked', true);
+            $('#rdoFirstDay').prop('disabled', true);
+            $('#rdoSecondDay').prop('disabled', true);
+        }
+        selectedDateTime = '#lblFirstday';
+    });
+
+// save event data
+    $('#btnSave').click(function(){
+        // Put here your data saving code
+        if($('#chkCSCday').prop('checked') && (date2 == '' || time2=='')){
+            alert('Select second date & time please.');
+            return;
+        }
+
+        if($('#btnAllday').hasClass('active')){
+            time1 = '00:00:00'; time2 = '00:00:00';
+        }
+
+        var uid = localStorage.getItem('uid');
+
+        if(uid == '' || uid == undefined){
+            error_dialog.dialog("open");
+        }
+        // check event title
+        var reason = '', title = '';
+        if(grd == 3){   // parent side
+            if($('#absent').prop('checked')){ title = childname + ' Absent'; }
+            if($('#drop-late').prop('checked')){title = childname + ' Drop Off Late'; }
+            if($('#pick-early').prop('checked')){ title = childname + ' Pick Up Early'; }
+            if($('#pother').prop('checked')){
+                alert('title '+$('#inp-title').val());
+                if($('#inp-title').val() == undefined){
+                    alert('Input title please.');
+                    return false;
+                }
+                title = childname + ' ' + $('#inp-title').val();
+            }
+
+            if(title == '') {alert('Input Event name and Content.'); return false;}
+            reason = ($('#reason-note').val()!= undefined)?$('#reason-note').val() : '';
+        }else{  // admin side
+            if($('#open-delay').prop('checked')){ title = 'Daycare Open Delay'; }
+            if($('#close-early').prop('checked')){ title = 'Daycare Close Early'; }
+            if($('#closing').prop('checked')){ title = 'Daycare Closing'; }
+            if($('#party').prop('checked')){ title = 'Daycare Party'; }
+            if($('#event').prop('checked') || $('#aother').prop('checked')){
+                alert('title '+$('#inp-title').val());
+                if($('#inp-title').val() == undefined){
+                    alert('Input title please.');
+                    return false;
+                }
+                title = $('#inp-title').val();
+            }
+
+            if(title == '') {alert('Input Event name and Content.'); return false;}
+            reason = ($('#reason-note').val()!= undefined)?$('#reason-note').val() : '';
+        }
+
+        console.log(date1 +'|'+time1 +'|'+date2 +'|'+time2 +'|'+title +'|'+reason +'|'+uid);
+        // insert into events (mdate, mtime, event, note, user_id)
+
+        $.ajax({ url: '/save-event', dataType: "JSON", type:'post',
+            data : {mdate:date1, mtime:time1, ndate:date2, ntime:time2, event:title, note:reason, user_id:uid},
+            success: function (data) {
+                if(data.result == 'success') loadEvent(cc);
+            },
+            error: function (xhr, status, error) {
+                alert("error");
+            }
+        });
+
+        //
+        initDateTimePicker();
+    })
+
+    $('#btnCancel').click(function () {
+        initDateTimePicker();
+    })
+
+    $('.tab-header').click(function(){
+        if($(this).attr('href')=="#date_time") $('#btnAllday').show();
+        else $('#btnAllday').hide();
+    })
+
+    $('#rdoFirstDay').click(function () { selectedDateTime = '#lblFirstday'; })
+
+    $('#rdoSecondDay').click(function () { selectedDateTime = '#lblSecondday'; })
+
+    $(".prev").click(function(){
+        currentmonth.setMonth(currentmonth.getMonth() - 1);
+        loadCalendar(currentmonth);
+        loadEvent(currentmonth);
+    })
+
+    $(".next").click(function(){
+        currentmonth.setMonth(currentmonth.getMonth() + 1);
+        loadCalendar(currentmonth);
+        loadEvent(currentmonth);
+    })
+    // when click <Search>
+    $("#btnsearch").click(function(){
+        var key = $("#word").val();
+        if (key == ""){
+            error_dialog.dialog( "open" );
+            return;
+        }
+
+        $.ajax({
+            url : "/search-event?key=" + key,
+            dataType:"JSON", // option
+            success : function(data) {
+                console.log(data);
+                $(".event-list").empty();
+
+//                    for(var i=0; i < data.length; i++){
+                $.each(data, function(key, row){
+                    var stime = (row.mtime != null)? row.mtime: '';
+                    var sdate = (row.mdate != null)? row.mdate: '';
+                    var etime = (row.ntime != null)? row.ntime: '';
+                    var edate = (row.ndate != null)? row.ndate: '';
+                    var scont = (row.event != null)? row.event: '';
+                    var snote = (row.note != null)? row.note: '';
+                    var grade = (row.grade != null)? row.grade: '';
+                    var sd = "", ed = '', st = "", et = '';
+
+                    if( sdate != '') {
+                        sdate = getLocalDateString(sdate);
+                        ss = sdate.split('-');
+                        sd = ss[1] + '-' + ss[2];
+                    }
+
+                    if( edate != '') {
+                        edate = getLocalDateString(edate);
+                        ss = sdate.split('-');
+                        ed = ss[1] + '-' + ss[2];
+                    }
+
+                    if( stime != '') st = (stime == '00:00:00')?'All Day' : isoTime2Local(stime);
+
+                    if( etime != '') et = (etime == '00:00:00')?'All Day' : isoTime2Local(etime);
+
+                    if(st == et) et = '';  // time1 = time2 => dont show time2
+
+                    add_event(sdate, st, edate, et, scont, snote, key);
+                })
+            },
+            error : function(xhr, status, error) { alert("error"); }
+        });
+    })
+
+    // In parent side, when click <other>
+    $("input[name='reason']").click(function () {
+        var id = $(this).prop('id');
+
+        if((id == 'event' || id == 'pother' || id == 'aother') && $(this).prop('checked'))
+            $('#row-title').css('display', 'block');
+        else
+            $('#row-title').css('display', 'none');
+    })
+
+</script>
+
+</body>
+
+</html>
