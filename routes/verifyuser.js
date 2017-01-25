@@ -33,6 +33,6 @@
         req.session.grade = grade;
         req.session.gender = gender;
         req.session.nickname = nickname;
-        return res.redirect('/dashboard');
+        return res.redirect('/dashboard?uid='+user_id+'&grade='+grade);
     });
 };

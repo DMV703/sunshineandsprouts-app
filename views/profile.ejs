@@ -962,8 +962,10 @@
             var ndate = new Date();
             var tstr = ndate.getHours() + ":";
             if(ndate.getHours() < 10) tstr = "0" + tstr;
-            if(ndate.getMinutes() < 10) tstr = tstr.concat("0", ndate.getMinutes());
-            else                        tstr = tstr.concat(ndate.getMinutes());
+            if(ndate.getMinutes() < 10)
+                tstr = tstr.concat("0", ndate.getMinutes());
+            else
+                tstr = tstr.concat(ndate.getMinutes());
 
             return tstr;
         }

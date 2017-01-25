@@ -19,6 +19,7 @@
     "morgan": "~1.7.0",
     "multer": "^1.2.0",
     "mysql": "^2.12.0",
+    "parsleyjs": "^2.6.2",
     "passport-facebook": "latest",
     "passport-google-oauth": "latest",
     "passport-local": "^1.0.0",

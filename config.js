@@ -36,6 +36,6 @@ exports.readSetting = function() {
     });
 }
 
-exports.URL = "http://ec2-54-147-107-47.compute-1.amazonaws.com:8080//";
+exports.URL = "http://192.168.3.148:8080/";
 
 this.readSetting();
