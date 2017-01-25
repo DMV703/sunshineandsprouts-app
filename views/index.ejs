@@ -1,0 +1,92 @@
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
+    "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">
+-->
+<!DOCTYPE html>
+<html id="html">
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1, minimum-scale=1,user-scalable=no">
+
+    <!--Web App Configs-->
+    <!--    <meta name="viewport" content="width=device-width,user-scalable=no">-->
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="../public/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../public/images/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../public/images/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="../public/images/touch-icon-ipad-retina.png">
+    <link rel="manifest" href="../manifest.json">
+
+    <!--
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="touch-icon-ipad-retina.png">    
+    <link rel="manifest" href="manifest.json">
+-->
+
+
+<script src="/javascripts/jquery.3.1.1.min.js"></script>
+    <link rel='stylesheet' type="text/css" href='/stylesheets/index.css' />
+    <link href="https://www.fontify.me/wf/e6a3c17c14d6295d075e29aa38e455ce" rel="stylesheet" type="text/css"> </head>
+<script type="text/javascript">
+    function check() {
+        var email = document.getElementById("email");
+        var pwd = document.getElementById("pwd");
+
+        if (email.checkValidity() == false) {
+            email.value = "Input correct email address";
+        } else if (pwd.value == '') {
+            pwd.value = "Input Password.";
+        } else {
+            document.getElementById("login_form").submit();
+        }
+        return 0;
+    }
+</script>
+
+<body>
+    <div class="wrapper">
+    <div class="daycarename"></div>
+    <form id="login_form" action="/verifyuser" method="post">
+        <div id="div-email">
+            <input type="email" id="email" name="email" placeholder="useremail@mail.com">
+        </div>
+        <div id="div-pwd">
+            <input type="password" id="pwd" name="pwd" placeholder="Password">
+        </div>
+        <div id="verify" onclick="check();">Login</div>
+        <div id="signup" onclick="location.href='/signup';">Sign Up</div>
+        <div id="repairPWD"><a href="/recoverpwd">Forgot Password?</a></div>
+    </form>
+    <div id="footer-img"></div>
+
+    
+        
+<!--    FIX: Keyboard pushes up the #footer-img in mobile version-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#email").focus(function () {
+                $("#footer-img").hide();
+            });
+            $("#email").focusout(function () {
+                $("#footer-img").show();
+            });
+
+            $("#pwd").focus(function () {
+                $("#footer-img").hide();
+            });
+            $("#pwd").focusout(function () {
+                $("#footer-img").show();
+            });            
+
+        });
+    </script>
+</body>
+</html>

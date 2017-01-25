@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunshine &amp; Sprout Daycare</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/jquery-ui.min.css">
+    <link rel="stylesheet" href="/stylesheets/signup_main.css">
+</head>
+
+<body>
+
+<div id="dialog-confirm" title="Information" style="display:none;">
+    <p>
+        <span class="glyphicon glyphicon-exclamation-sign" style="font-size:20px; color:#3e8acc;float:left; margin-right:12px;"></span>
+        <span id="msg-cont"></span>
+    </p>
+</div>
+
+<div class="container">
+    <ul class="nav nav-tabs" style="display:none;">
+        <li class="active"><a id="a-main" data-toggle="tab" href="#signup-main">Main</a></li>
+        <li><a id="a-parent" data-toggle="tab" href="#signup-parent">Parent Information</a></li>
+        <li><a id="a-child" data-toggle="tab" href="#signup-child">Child Information</a></li>
+        <li><a id="a-medical" data-toggle="tab" href="#signup-medical">Medical Information</a></li>
+        <li><a id="a-contact" data-toggle="tab" href="#signup-contact">Emergency Contact</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <!-- SignUp Main Page-->
+        <section id="signup-main"  class="tab-pane fade in active">
+            <div class="page-header">
+                <div class="col-sm-2 col-xs-2" id="div-backbtn">
+                    <i class="glyphicon glyphicon-circle-arrow-left" id="main-backbtn"></i>
+                </div>
+                <div class="col-sm-10 col-xs-10">
+                    <h3 class="text-center"> Sign Up New Parent</h3>
+                </div>
+            </div>
+            <section class="page-body1">
+                <div class="row" id="div-info">
+                    <div class="col-md-12">
+                        <p>Hello, welcome to our Sunshine and Sprouts Daycare App. Please take the time to fill out our Form with your information.&nbsp;We do have required Fields marked with *, these are important for us to better complete our Parent-Care Giver
+                            experience. </p>
+                        <p>Our Goal with this app is to make both of our lives easier by automating certain tasks and having transparent communication between us. We thank you again for your support. </p>
+                    </div>
+                </div>
+                <div class="row div-row-content">
+                    <div class="col-sm-4 col-xs-5 col-xs-offset-0 col-lbl"><span>E-mail* </span></div>
+                    <div class="col-sm-8 col-xs-7">
+                        <input type="email" id="inp-mail" required>
+                    </div>
+                </div>
+                <div class="row div-row-content">
+                    <div class="col-sm-4 col-xs-5" id="col-lbl"><span>Create Password*</span></div>
+                    <div class="col-sm-8 col-xs-7">
+                        <input type="password" id="inp-pwd" required maxlength="20" minlength="8">
+                    </div>
+                </div>
+                <div class="row div-row-content">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Facility*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <select  id="cld-facility">
+                            <option value="0" selected="">Choose Facility</option>
+                            <option value="1" >Broadland</option>
+                            <option value="2">Cascade</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row div-row-content">
+                    <div class="col-sm-4 col-xs-5" id="col-lbl"><span>Account Type*</span></div>
+                    <div class="col-sm-8 col-xs-7">
+                        <label id="lblparent">Parent
+                            <input type="radio" id="typeParent" name="accType" class="accType" checked>
+                        </label>
+                        <label id="lblfaculty">Faculty
+                            <input type="radio" id="typeFaculty" name="accType" class="accType">
+                        </label>
+                    </div>
+                </div>
+                <div class="row" id="row-btn">
+                    <button class="btn btn-default" type="button" id="main-nextbtn">Begin</button>
+                </div>
+            </section>
+            <footer></footer>
+        </section>
+        <!-- SignUp Parent Page-->
+        <section id="signup-parent"  class="tab-pane fade">
+            <div class="page-header">
+                <div class="row" id="row-header">
+                    <div class="col-sm-2 col-xs-2" id="div-backbtn">
+                        <i class="glyphicon glyphicon-circle-arrow-left" id="prt-backbtn"></i>
+                    </div>
+                    <div class="col-sm-10 col-xs-10">
+                        <h3 class="text-center">Parent Information</h3></div>
+                </div>
+            </div>
+            <section class="page-body">
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>First Name*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-name1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Last Name*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-name2">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-4 col-xs-7 col-xs-offset-5 col-input">
+                        <label for="chk-father" style="color: #3e8acc;">Father*&nbsp;&nbsp;
+                            <input type="radio" name="gender" id="chk-father" checked>
+                        </label>
+
+                        <label for="chk-mother" style="color: #3e8acc;float:right;">Mother*&nbsp;&nbsp;
+                            <input type="radio" name="gender" id="chk-mother">
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Phone Number*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-phone" maxlength="10">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Street Address*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-street">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>City*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-city">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>State*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <select  id="prt-state"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Zip Code*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-zip" maxlength="5">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Employer</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-employer">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Employer Phone Number</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-work-phone" maxlength="10">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Employer Streeet Address</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-work-street">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Employer City</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-work-city">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Employer ZipCode</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="prt-work-zip" maxlength="5">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Employer State</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <select  id="prt-work-state"></select>
+                    </div>
+                </div>
+                <div class="row" id="row-btn">
+                    <button class="btn btn-default" type="button" id="prt-nextbtn">Next</button>
+                </div>
+            </section>
+            <footer></footer>
+        </section>
+        <!-- SignUp Children Page-->
+        <section id="signup-child" class="tab-pane fade">
+            <div class="page-header">
+                <div class="row" id="row-header">
+                    <div class="col-sm-2 col-xs-2" id="div-backbtn">
+                        <i class="glyphicon glyphicon-circle-arrow-left" id="cld-backbtn"></i>
+                    </div>
+                    <div class="col-sm-10 col-xs-10">
+                        <h3 class="text-center">Child Information</h3></div>
+                </div>
+            </div>
+            <section class="page-body">
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Name*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <select id="cld-name">
+                            <option value="0" selected>Select Child</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Nickname</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text"  id="cld-nickname">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Date Of Birth*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text"  id="cld-dob" placeholder="Feb 21 2000" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Street Address*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="cld-street">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>City*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text"  id="cld-city">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Zip Code*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="cld-zip" maxlength="5" minlength="5">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>State*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <select  id="cld-state">
+                        </select>
+                    </div>
+                </div>
+                <div class="row" id="row-btn">
+                    <button class="btn btn-default" type="button" id="cld-nextbtn">Next </button>
+                </div>
+            </section>
+            <footer></footer>
+        </section>
+        <!-- SignUp Medical Page-->
+        <section id="signup-medical" class="tab-pane fade">
+            <div class="page-header">
+                <div class="row" id="row-header">
+                    <div class="col-sm-2 col-xs-2" id="div-backbtn">
+                        <i class="glyphicon glyphicon-circle-arrow-left" id="mdc-backbtn"></i>
+                    </div>
+                    <div class="col-sm-10 col-xs-10">
+                        <h3 class="text-center">Medical Needs</h3></div>
+                </div>
+            </div>
+            <section class="page-body">
+                <div class="row">
+                    <div class="col-sm-10 col-xs-9 col-lbl"><span>Allergies, intolerances to food, medications, or&nbsp;other substances </span></div>
+                    <div class="col-sm-2 col-xs-3 col-button">
+                        <i class="glyphicon glyphicon-minus add-del-btn" id="allergy-delbtn"></i>
+                        <i class="glyphicon glyphicon-plus add-del-btn" id="allergy-addbtn"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-ul">
+                        <ul id="ul-allergy">
+                            <li><input type="text" value=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-10 col-xs-9 col-lbl"><span>Actions to take in emergency situations: </span></div>
+                    <div class="col-sm-2 col-xs-3 col-button">
+                        <i class="glyphicon glyphicon-minus add-del-btn" id="emergency-delbtn"></i>
+                        <i class="glyphicon glyphicon-plus add-del-btn" id="emergency-addbtn"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-ul">
+                        <ul id="ul-emergency">
+                            <li><input type="text" value=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-10 col-xs-9 col-lbl"><span>Physical Problem/Diseases: </span></div>
+                    <div class="col-sm-2 col-xs-3 col-button">
+                        <i class="glyphicon glyphicon-minus add-del-btn" id="physical-delbtn"></i>
+                        <i class="glyphicon glyphicon-plus add-del-btn" id="physical-addbtn"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-ul">
+                        <ul id="ul-physical">
+                            <li><input type="text" value=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-10 col-xs-9 col-lbl"><span>Special Accomedations needed: </span></div>
+                    <div class="col-sm-2 col-xs-3 col-button">
+                        <i class="glyphicon glyphicon-minus add-del-btn" id="accom-delbtn"></i>
+                        <i class="glyphicon glyphicon-plus add-del-btn" id="accom-addbtn"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-ul">
+                        <ul id="ul-accom">
+                            <li><input type="text" value=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-10 col-xs-9 col-lbl"><span>Special instructions to Provider(s): </span></div>
+                    <div class="col-sm-2 col-xs-3 col-button">
+                        <i class="glyphicon glyphicon-minus add-del-btn" id="instr-delbtn"></i>
+                        <i class="glyphicon glyphicon-plus add-del-btn" id="instr-addbtn"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-ul">
+                        <ul id="ul-instruction">
+                            <li><input type="text" value=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row" id="row-btn">
+                    <button class="btn btn-default" type="button" id="mdc-nextbtn">Next </button>
+                </div>
+            </section>
+            <footer></footer>
+        </section>
+        <!-- SignUp Contact Page-->
+        <section id="signup-contact" class="tab-pane fade">
+            <div class="page-header">
+                <div class="row" id="row-header">
+                    <div class="col-sm-2 col-xs-2" id="div-backbtn">
+                        <i class="glyphicon glyphicon-circle-arrow-left" id="cont-backbtn"></i>
+                    </div>
+                    <div class="col-sm-10 col-xs-10">
+                        <h3 class="text-center">Emergency Contact</h3>
+                    </div>
+                </div>
+            </div>
+            <section class="page-body">
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Full Name*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="cont-name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Phone Number*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="cont-phone" maxlength="10" >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Street Address</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="cont-street">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>City</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="cont-city">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>State</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <select  id="cont-state">
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Zip Code</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="cont-zip" maxlength="5">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-5 col-lbl"><span>Relation to Child*</span></div>
+                    <div class="col-sm-8 col-xs-7 col-input">
+                        <input type="text" id="cont-relation" required>
+                    </div>
+                </div>
+                <div class="row" id="row-btn">
+                    <button class="btn btn-default" type="button" id="savebtn">Submit</button>
+                </div>
+            </section>
+            <footer></footer>
+        </section>
+    </div>
+</div>
+
+    <script src="/javascripts/jquery.3.1.1.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/jquery-ui.min.js"></script>
+    <script src="/javascripts/common.js"></script>
+
+    <script>
+
+        function showMessage(msg) {
+            var msgdlg = $( "#dialog-confirm" ).dialog({
+                resizable: false,
+                height: "auto",
+                width : 280,
+                modal: true,
+                buttons: {
+                    "Close": function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+            $("#msg-cont").text(msg);
+            msgdlg.dialog("open");
+        }
+
+        function showMessageClose(msg) {
+            var msgdlg = $( "#dialog-confirm" ).dialog({
+                resizable: false,
+                height: "auto",
+                width : 280,
+                modal: true,
+                buttons: {
+                    "Close": function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+            $("#msg-cont").text(msg);
+            msgdlg.dialog("open");
+        }
+        // Initialization of page
+        $(document).ready(function(){
+            var ss = '', num = 0;
+            $.ajax({ url: '/get-state-names', datatype:'JSON',
+                success : function (res){
+                    for(var i in res){
+                        num = i * 1 + 1;
+                        ss = '<option value="'+ res[i].name +'"';
+//                        ss = '<option value="'+ num +'"';
+                        if(i==45) ss += ' selected';
+                        ss += '>' + res[i].name + '</option>';
+                        $('#prt-work-state').append(ss);
+                        $('#prt-state').append(ss);
+                        $('#cld-state').append(ss);
+                        $('#cont-state').append(ss);
+                    }
+                }
+            })
+
+            $.ajax({ url:'/getChildList', datatype:'JSON',
+                success: function(res){
+                    for(var i in res){
+                        ss = "<option value='" + res[i].cid + "'>" + res[i].child_name + "</option>";
+                        $('#cld-name').append(ss);
+                    }
+                }
+            })
+
+            $( "#cld-dob" ).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat: "M d yy"
+            });
+
+        })
+
+        // variables in main page
+        var smail = '', pwd = '', grade = '';
+        // variables in parent page
+        var prt_name1= '',   prt_name2 = '',
+            prt_phone = '',  prt_street = '',
+            prt_city = '',   prt_state = '',
+            prt_zip = '',    employer = '',
+            workphone = '',  workstreet = '',
+            workcity = '',   workzip = '',
+            workstate = '',  prt_gender = '';
+        // variables in child page
+        var cld_id = '',
+            cld_nickname = '',  cld_dob = '',
+            cld_street = '',    cld_city = '',
+            cld_state = '',     cld_facility = '',
+            cld_zip = '';
+        // variables in emergency contact page
+        var cont_name = '', cont_phone = '',
+            cont_street = '', cont_city='',
+            cont_state='', cont_zip='', cont_relation = '';
+
+        /***********************
+         *   SignUp Main
+         **********************/
+        $('#inp-mail').focus(function(){$(this).css('background-color', 'white');});
+        $('#inp-pwd').focus(function(){$(this).css('background-color', 'white');})
+        $('#cld-facility').click(function(){ $(this).css('background-color', '#fff'); })
+
+        $('#main-backbtn').click(function(){ location.href='/'; })
+
+        $('#main-nextbtn').click(function(){
+
+            smail =$('#inp-mail').val();
+            if( !smail || !checkEmail(smail)){
+                showMessage('Input Correct Email Address.');
+                $('#inp-mail').css('background-color', '#fdc2c2');
+                return false;
+            }
+
+            pwd = $('#inp-pwd').val();
+            if( pwd=='' || pwd.length < 8) {
+                showMessage('Length of Password must be 8~20.');
+                $('#inp-pwd').css('background-color', '#fdc2c2');
+                return false;
+            }
+
+            cld_facility = $('#cld-facility').val();
+            if(cld_facility == '0' ){
+                showMessage('Select Facility.');
+                $('#cld-facility').css('background-color', '#fdc2c2');
+                return false;
+            }
+
+            grade = ($('#typeParent').prop('checked'))? '3' : '2';
+
+            // check double of email
+            $.ajax({
+                 url:'/check-double-email', type:'post', datatype:'JSON',
+                 data:{ mail : smail},
+                 success:function(data){
+                     if(data.result*1 > 0){ // Email already registered
+                         showMessage('This Email Address already Exists.');
+                         $('#inp-mail').css('background-color', '#fdc2c2');
+                         return false;
+                     }
+                     // Go to parent Inform Page
+                     $('#a-parent').click();
+                 }
+            })
+        })
+
+        /********************************
+        *   Sign up Parent Information
+        *********************************/
+        $('#prt-name1').focus(function(){ $(this).css('background-color', 'white'); })
+        $('#prt-name2').focus(function(){ $(this).css('background-color', 'white'); })
+        $('#prt-phone').focus(function(){ $(this).css('background-color', 'white'); })
+        $('#prt-street').focus(function(){ $(this).css('background-color', 'white'); })
+        $('#prt-city').focus(function(){ $(this).css('background-color', 'white'); })
+        $('#prt-zip').focus(function(){ $(this).css('background-color', 'white'); })
+        $('#prt-work-phone').focus(function(){ $(this).css('background-color', 'white'); })
+        $('#prt-work-zip').focus(function(){ $(this).css('background-color', 'white'); })
+
+        $('#prt-backbtn').click(function () {$('#a-main').click(); })
+
+        $('#prt-nextbtn').click(function(){
+            prt_name1= $('#prt-name1').val();   prt_name2 = $('#prt-name2').val();
+            prt_phone = $('#prt-phone').val();  prt_street = $('#prt-street').val();
+            prt_city = $('#prt-city').val();    prt_state = $('#prt-state').val();
+            prt_zip = $('#prt-zip').val();      employer = $('#prt-employer').val();
+            workphone = $('#prt-work-phone').val();     workstreet = $('#prt-work-street').val();
+            workcity = $('#prt-work-city').val();       workzip = $('#prt-work-zip').val();
+            workstate = $('#prt-work-state').val();
+
+            if (prt_name1=='' || !checkName(prt_name1)) {
+                showMessage('Input First Name with 3~20 Alphabet.');
+                $('#prt-name1').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (prt_name2=='' || !checkName(prt_name2)) {
+                showMessage('Input Last Name with 3~20 Alphabet.');
+                $('#prt-name2').css('background-color', '#fdc2c2');
+                return false;
+            }
+
+            prt_gender = $('#chk-father').prop('checked')? 'f' : 'm';
+
+            if (prt_phone==''  || !checkPhoneNumber(prt_phone)) {
+                showMessage('Input PhoneNumber as 10 digits.');
+                $('#prt-phone').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (prt_street=='') {
+                showMessage('Input Street.');
+                $('#prt-street').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (prt_city =='') {
+                showMessage('Input City.');
+                $('#prt-city').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (prt_state =='') {
+                showMessage('Select State.');
+                $('#prt-state').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (prt_zip=='' || !checkZipCode(prt_zip)) {
+                showMessage('Input Zipcode as 5 digits.');
+                $('#prt-zip').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (workphone!=''  && !checkPhoneNumber(workphone)) {
+                showMessage('Input PhoneNumber as 10 digits.');
+                $('#prt-work-phone').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (workzip!='' && !checkZipCode(workzip)) {
+                showMessage('Input Zipcode as 5 digits.');
+                $('#prt-work-zip').css('background-color', '#fdc2c2');
+                return false;
+            }
+
+            // Go to SignUp Child Page
+            $('#a-child').click();
+        })
+
+        /************************************
+         *  Signup Child Inform
+         ***********************************/
+        $('#cld-name').click(function(){ $(this).css('background-color', '#fff'); })
+        $('#cld-nickname').click(function(){ $(this).css('background-color', '#fff'); })
+        $('#cld-dob').click(function(){ $(this).css('background-color', '#fff'); })
+        $('#cld-street').click(function(){ $(this).css('background-color', '#fff'); })
+        $('#cld-city').click(function(){ $(this).css('background-color', '#fff'); })
+        $('#cld-zip').click(function(){ $(this).css('background-color', '#fff'); })
+
+        $('#cld-nextbtn').click(function(){
+            cld_id = $('#cld-name option:selected').val();
+            cld_nickname = $('#cld-nickname').val();    cld_dob = getLocalDate2ISO( $('#cld-dob').datepicker( "getDate" ));
+            cld_street = $('#cld-street').val();        cld_city = $('#cld-city').val();
+            cld_state = $('#cld-state').val();          cld_zip = $('#cld-zip').val();
+
+            if (cld_id == '0') { // when selected no child
+                showMessage('Select Child.');
+                $('#cld-name').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (cld_nickname != '' && !checkName(cld_nickname)) {
+                showMessage('Input NickName with 3~20 Alphabet.');
+                $('#cld-nickname').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (cld_dob=='') {
+                showMessage('Input DOB such as Jan 14 2000.');
+                $('#cld-dob').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (cld_street=='') {
+                showMessage('Input Street.');
+                $('#cld-street').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (cld_city =='') {
+                showMessage('Input City.');
+                $('#cld-city').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if (cld_zip=='' || !checkZipCode(cld_zip)) {
+                showMessage('Input Zipcode as 5 digits.');
+                $('#cld-zip').css('background-color', '#fdc2c2');
+                return false;
+            }
+
+            // go to medical page
+            $('#a-medical').click();
+
+        })
+
+        $('#cld-backbtn').click(function () { $('#a-parent').click(); })
+
+        /************************************
+         *  Signup Medical Inform
+         ***********************************/
+        $('#allergy-delbtn').click(function(){
+            $('#ul-allergy li.selected').remove();
+        })
+
+        $('#allergy-addbtn').click(function(){
+            $('#ul-allergy').append('<li><input type="text"></li>');
+
+            // add focus listner at new item
+            $("#ul-allergy li input").focus(function(){
+                $("#ul-allergy li.selected").removeClass('selected');
+                $(this).parent().addClass('selected');
+            })
+
+            $("#ul-allergy li:last-child input").focus();
+        })
+
+        $('#emergency-delbtn').click(function(){
+            $('#ul-emergency li.selected').remove();
+        })
+
+        $('#emergency-addbtn').click(function(){
+            $('#ul-emergency').append('<li><input type="text"></li>');
+
+            // add focus listner at new item
+            $("#ul-emergency li input").focus(function(){
+                $("#ul-emergency li.selected").removeClass('selected');
+                $(this).parent().addClass('selected');
+            })
+
+            $("#ul-emergency li:last-child input").focus();
+        })
+
+        $('#physical-delbtn').click(function(){
+            $('#ul-physical li.selected').remove();
+        })
+
+        $('#physical-addbtn').click(function(){
+            $('#ul-physical').append('<li><input type="text"></li>');
+
+            // add focus listner at new item
+            $("#ul-physical li input").focus(function(){
+                $("#ul-physical li.selected").removeClass('selected');
+                $(this).parent().addClass('selected');
+            })
+
+            $("#ul-physical li:last-child input").focus();
+        })
+
+        $('#accom-delbtn').click(function(){
+            $('#ul-accom li.selected').remove();
+        })
+
+        $('#accom-addbtn').click(function(){
+            $('#ul-accom').append('<li><input type="text"></li>');
+
+            // add focus listner at new item
+            $("#ul-accom li input").focus(function(){
+                $("#ul-accom li.selected").removeClass('selected');
+                $(this).parent().addClass('selected');
+            })
+
+            $("#ul-accom li:last-child input").focus();
+        })
+
+        $('#instr-delbtn').click(function(){
+            $('#ul-instruction li.selected').remove();
+        })
+
+        $('#instr-addbtn').click(function(){
+            $('#ul-instruction').append('<li><input type="text"></li>');
+
+            // add focus listner at new item
+            $("#ul-instruction li input").focus(function(){
+                $("#ul-instruction li.selected").removeClass('selected');
+                $(this).parent().addClass('selected');
+            })
+
+            $("#ul-instruction li:last-child input").focus();
+        })
+
+        // go to emergency contact page
+        $('#mdc-nextbtn').click(function(){ $('#a-contact').click(); })
+
+        $('#mdc-backbtn').click(function(){ $('#a-child').click(); })
+
+        /************************************
+         *  Signup Emergency Contact Inform
+         ***********************************/
+        $('#cont-backbtn').click(function () { $('#a-medical').click(); })
+
+        $('#cont-name').click(function(){ $(this).css('background-color', '#fff'); })
+        $('#cont-phone').click(function(){ $(this).css('background-color', '#fff'); })
+        $('#cont-zip').click(function(){ $(this).css('background-color', '#fff'); })
+        $('#cont-relation').click(function(){ $(this).css('background-color', '#fff'); })
+
+        $('#savebtn').click(function () {
+            cont_name = $('#cont-name').val();
+            cont_phone = $('#cont-phone').val();
+            cont_street = $('#cont-street').val();
+            cont_city = $('#cont-city').val();
+            cont_state = $('#cont-state').val();
+            cont_zip =  $('#cont-zip').val();
+            cont_relation = $('#cont-relation').val();
+
+            // validation
+            var nn = cont_name.split(' ');
+            if(cont_name == ''){
+                showMessage("Input the Contact people's Name in Emergency.");
+                $('#cont-name').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if(!checkName(nn[0]) || (nn.length > 1 && !checkName(nn[1]))){
+                showMessage("Name is 3~20 Alphabets.");
+                $('#cont-name').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if(cont_phone == '' || !checkPhoneNumber(cont_phone)){
+                showMessage("Input the phone number as 10 digits.");
+                $('#cont-phone').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if(cont_zip != '' && !checkZipCode(cont_zip)){
+                showMessage("Input the Zip Code as 5 digits.");
+                $('#cont-zip').css('background-color', '#fdc2c2');
+                return false;
+            }
+            if(cont_relation == ''){
+                showMessage("Input relation with child.");
+                $('#cont-relation').css('background-color', '#fdc2c2');
+                return false;
+            }
+
+            /****************************************************
+            // register user and Save informations of parent, child, medical and emergency contact
+             ****************************************************/
+            // register user
+            var success = false, uid = '', cid = '';
+
+            $.ajax({
+                url : '/save-epg', type:'post', datatype:'JSON',
+                data:{mail: smail, pwd:pwd, grade:grade, facility:cld_facility},
+                async : false,
+                success:function(data){
+                    uid = data.uid;
+                    if(uid*1 >= 0){
+                        localStorage.setItem('uid', uid);
+                        localStorage.setItem('grade', data.grade);
+                        success = true;
+                    }
+                }
+            })
+
+            if (! success) {
+                showMessage('Failed to register user. Try again later.');
+                return false;
+            }
+
+            // save parent's inform
+            $.ajax({ url:'/save-parent-profile', type:'post', datatype:'JSON',
+                data:{name1: prt_name1, name2: prt_name2, gender: prt_gender, phone: prt_phone,
+                    street: prt_street, city: prt_city, state: prt_state, zip: prt_zip,
+                    employer: employer, workphone: workphone, workstreet: workstreet,
+                    workcity: workcity, workzip: workzip, workstate: workstate, uid: uid},
+                async : false,
+                success : function(data){
+                    if(data.changedRows > 0) success = true;
+                }
+            })
+
+            if (! success) {
+                showMessage('Failed to save user profile. Try again later.');
+                return false;
+            }
+
+            // save child's inform
+            $.ajax({ url:'/save-child-profile', type:'post', datatype:'JSON',
+                data:{cid: cld_id, nickname: cld_nickname, dob: cld_dob,zip: cld_zip,
+                    street: cld_street, city: cld_city, state: cld_state, facility: cld_facility, uid: uid},
+                    async : false,
+                success : function(data){
+                    if(data.cid) {
+                        cid = data.cid;
+                        localStorage.setItem('cid', cid);
+                        success = true;
+                    }
+                }
+            })
+
+            if (! success) {
+                showMessage('Failed to register child. Try again later.');
+                return false;
+            }
+
+            // save medical inform
+            var action = ['','#ul-allergy','#ul-emergency','#ul-physical','#ul-accom','#ul-instruction'];
+
+            $.ajax({
+                url:'/delete-emergency', type:'post',
+                data :{cid: cid}, async:false,
+                success: function(data){ success = true; },
+                error: function(xhr, status, error){ return false;}
+            })
+
+            if (! success) {
+                showMessage('Failed to register child. Try again later.');
+                return false;
+            }
+
+            for(var j=1; j <= 5; j++){
+                var items = $(action[j]+' input');
+                var mms = '', sc = false;
+                $.each(items, function(i, item){
+                    mms = item.value;
+                    $.ajax({
+                        url:'/update-emergency', type:'post',
+                        data :{cid: cid, emerg : mms, kind: ''+j}, async:false,
+                        success: function(data){
+
+                            success = true;
+                        },
+                        error: function(xhr, status, error){ success = false;}
+                    })
+                });
+            }
+
+            if (! success) {
+                showMessage('Failed to svae child`s medical information.');
+                return false;
+            }
+
+            // save emergency contact
+            $.ajax({
+                url :'/save-emcontact-data', type:'post', datatype:'JSON', //async: false,
+                data:{cid: cid,
+                    kind : '1',
+                    name:cont_name,
+                    phone:cont_phone,
+                    address:cont_street,
+                    city:cont_city,
+                    state:cont_state,
+                    zipcode:cont_zip,
+                    relation:cont_relation
+                },
+                success: function(data){
+                    showMessageClose('Sign Up was successfully completed.');
+                    location.href = '/dashboard';
+                },
+                error: function(xhr, status, error){ return false;}
+            })
+        })
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>Sunshine and Sprout Daycare</title>
+    <link rel="stylesheet" href="/stylesheets/jquery-ui.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+    <link rel='stylesheet' type="text/css" href='/stylesheets/add_activity.css' />
+
+    <script src="/javascripts/jquery-1.11.0.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+	<script src="/javascripts/jquery-ui.min.js"></script>
+	<script src="/javascripts/common.js"></script>
+
+</head>
+<!--<script src="/socket.io/socket.io.js"></script>-->
+
+
+<body>
+<!-- Form to add Note  -->
+<div id="timer-dialog" title="Add Note" style="display: none;" new="true" rid="" cid="">
+    <p class="validateTips">Time</p>
+    <form>
+        <fieldset>
+            <input type="time" id="timer" value="" class="ui-widget-content ui-corner-all">
+
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px" new="true">
+        </fieldset>
+    </form>
+</div>
+<!-- Form to add Bottle  -->
+<div id="bottle-dialog" title="Add Bottle" style="display: none;" new="true" rid="" cid="">
+    <form>
+        <fieldset>
+            <input type="time" id="bottle-timer" value="" class="ui-widget-content ui-corner-all">
+            <br>
+            <div>
+                <h4>Milk of oz</h4>
+                <input type="text" pattern="[0-9]{2}" id="bottle-num" value="0">
+                <img src="/images/plus2.svg" id="bottle-plus" style="margin-left:20px;">
+                <img src="/images/minus2.svg" id="bottle-minus" style="margin-left:20px;">
+            </div>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!-- Form to add Drink  -->
+<div id="drink-dialog" title="Add Drink" style="display: none;" new="true" rid="" cid="">
+    <form>
+        <fieldset>
+            <input type="time" id="drink-timer" value="" class="ui-widget-content ui-corner-all">
+            <br>
+            <div>
+                <h4 style="margin-bottom: 10px">Drinks</h4>
+                <table style="width:100%; border:0px;background-color:white" id="drinkTable">
+                    <tr style="background-color:white;padding-bottom: 0px">
+                        <td width="50%" height="25px">
+                            <label style="font-size: 18px"> <input type="checkbox" id="milk"  value="1"> &nbsp;&nbsp;Milk </label>
+                        </td>
+                        <td width="50%" height="25px">
+                            <label style="font-size: 18px;"> <input type="checkbox" id="water" value="2">&nbsp;&nbsp;Water</label>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;padding-bottom: 0px">
+                        <td width="50%" height="25px">
+                            <label style="font-size: 18px"> <input type="checkbox" id="juice" value="3">&nbsp;&nbsp;Juice</label>
+                        </td>
+                        <td width="50%" height="25px">
+                            <label style="font-size: 18px;"> <input type="checkbox" id="other" value="4">&nbsp;&nbsp;Other</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!-- Form to add Photo  -->
+<div id="photo-dialog" title="Add Photo" style="display: none;" new="true" rid="" cid="">
+    <form>
+        <fieldset style="border:0px;">
+            <div>
+                <div id="div-picture">
+                    <img id="photo" style="border:0px solid;">
+                </div>
+                <div >
+                    <div style="margin-top:15px; text-align: center;">
+                        <span class="glyphicon glyphicon-camera" style="font-size:36px;color: #3e8acc;"></span><br>
+                        <label id="wrapper" for="photo-selector" style="display: none;">
+                            <input id="photo-selector" name="photo-selector" type="file" accept="image/*" capture="camera">
+                        </label>
+                        <label><input id="groupcheck" name="groupcheck" type="checkbox" checked>&nbsp;Group Timeline</label>
+                    </div>
+
+                    <div></div>
+                    <div><textarea id="photo-note" style="width:100%;" placeholder="Add Comment Here"></textarea></div>
+
+                </div>
+            </div>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!-- Form to add Comment  -->
+<div id="comment-dialog" title="Add Comment" style="display: none;" new="true" rid="" cid="">
+    <form>
+        <fieldset style="border:0px;">
+            <h4>Time</h4>
+            <input type="time" id="comment-timer" value="" class="ui-widget-content ui-corner-all">
+            <br>
+            <div>
+                <h4>Comment</h4>
+                <textarea id="comment-note" maxlength="500" style="width:100%;"></textarea>
+            </div>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!-- Form to add Potty  -->
+<div id="potty-dialog" title="Add Potty & Diaper" style="display: none;" new="true" rid="" cid="">
+    <form>
+        <fieldset>
+            <div style=" margin-top:20px;">
+                <input type="time" id="potty-timer" value="" class="ui-widget-content ui-corner-all">
+            </div>
+            <div style=" margin-top:20px;">
+
+                <table style="width:100%; border:0px;background-color:white;">
+                    <tr style="background-color:white; border-bottom:2px solid #dfdfdf">
+                        <td style="width:50%;height:35px;padding-left:15px;">
+                            <label style="font-size: 18px"> <input type="radio" name="kind" id="diaper" value="Diaper" checked>&nbsp;&nbsp;Diaper</label>
+                        </td>
+                        <td style="width:50%;height:35px;padding-left:15px;">
+                            <label style="font-size: 18px"> <input type="radio" name="kind" id="potty" value="Potty">&nbsp;&nbsp;Potty</label>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white">
+                        <td style="width:50%;height:35px;padding-left:15px;padding-top: 10px">
+                            <label style="font-size: 18px"> <input type="checkbox" name="potty" id="wet" value="wet" checked>&nbsp;&nbsp;Wet</label>
+                        </td>
+                        <td style="width:50%;height:35px;padding-left:15px;padding-top: 10px">
+                            <label style="font-size: 18px"> <input type="checkbox" name="potty" id="dry" value="dry">&nbsp;&nbsp;Dry</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!-- Form to add Food  -->
+<div id="food-dialog" title="Food" style="display: none;" new="true" rid="" cid="">
+    <form>
+        <fieldset>
+            <div>
+                <table style="width:100%; border:0;background-color:white" id="foodtable">
+                </table>
+            </div>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!-- Form to add Mood  -->
+<div id="mood-dialog" title="Add Mood" style="display: none;" new="true" rid="" cid="">
+    <form>
+        <fieldset>
+            <label style="font-size: 18px; width:100%; margin-top:20px;">
+                <input type="time" id="mood-timer" value="" class="ui-widget-content ui-corner-all">
+            </label>
+            <br>
+            <div style="margin-top:20px;">
+
+                <table style="width:100%; border:0px;background-color:white" id="moodTable">
+                    <tr style="background-color:white">
+                        <td width="50%" height="30px">
+                            <label style="font-size: 18px"> <input type="radio" name="mood" id="focused">&nbsp;&nbsp;Focused</label>
+                        </td>
+                        <td width="50%" height="30px">
+                            <label style="font-size: 18px"> <input type="radio" name="mood" id="friendly">&nbsp;&nbsp;Friendly</label>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white">
+                        <td width="50%" height="30px">
+                            <label style="font-size: 18px"> <input type="radio" name="mood" id="fussy">&nbsp;&nbsp;Fussy</label>
+                        </td>
+                        <td width="50%" height="30px">
+                            <label style="font-size: 18px"> <input type="radio" name="mood" id="happy" checked>&nbsp;&nbsp;Happy</label>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white">
+                        <td width="50%" height="30px">
+                            <label style="font-size: 18px"> <input type="radio" name="mood" id="hyper">&nbsp;&nbsp;Hyper</label>
+                        </td>
+                        <td width="50%" height="30px">
+                            <label style="font-size: 18px"> <input type="radio" name="mood" id="sick">&nbsp;&nbsp;Sick</label>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white">
+                        <td width="50%" height="30px">
+                            <label style="font-size: 18px"> <input type="radio" name="mood" id="misbeahaving">&nbsp;&nbsp;Misbeahaving</label>
+                        </td>
+                        <td width="50%" height="30px">
+                            <label style="font-size: 18px"> <input type="radio" name="mood" id="needy">&nbsp;&nbsp;Needy</label>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white">
+                        <td width="50%" height="30px">
+                            <label style="font-size: 18px"> <input type="radio" name="mood" id="tired">&nbsp;&nbsp;Tired</label>
+                        </td>
+                        <td width="50%" height="30px">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!-- Form to add Request  -->
+<div id="request-dialog" title="Add Request" style="display: none;" new="true" rid="" cid="">
+    <form>
+        <fieldset>
+            <div>
+
+                <table style="width:100%; border:0px;background-color:white">
+                    <tr style="background-color:white">
+                        <td height="25px" colspan="2">
+                            <label style="font-size: 18px"> <input type="checkbox" id="diapers">&nbsp;&nbsp;Diapers</label>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white">
+                        <td width="50%" height="25px">
+                            <label style="font-size: 18px"> <input type="checkbox" id="wipe">&nbsp;&nbsp;Wipe</label>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white">
+                        <td width="50%" height="25px">
+                            <label style="font-size: 18px"> <input type="checkbox" id="disposable">&nbsp;&nbsp;Disposable Bibs</label>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white">
+                        <td width="50%" height="25px">
+                            <label style="font-size: 18px"> <input type="checkbox" id="formula">&nbsp;&nbsp;Formula</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+
+<div id="div-body">
+	<div id="notify" style="display: none;width:100%; height:250px;background-color:#00b7ff;">
+		<br>
+		<h3 style="text-align: center" id="msg"></h3>
+		<button onclick="hide();" style="width:20%;height:30px;margin-left: 40%;">Close</button>
+		<br>
+	</div>
+    <div id="div-head" style="text-align: center;">
+        <span class="glyphicon glyphicon-circle-arrow-left" id="btnBack" onclick="window.history.back();"></span>
+        <!--<i class="fa fa-angle-left" style="font-size:30px;" onclick="location.href='/dashboard'"></i>-->
+        <!--<i class="fa fa-plus" onclick="location.href='/add-activity'"></i>-->
+        <h3 style="display:inline-block;">Add Activities</h3>
+    </div>
+	<div id="div-main">
+        <div id="div-photoline">
+            <div id="div-photo" style="height:100%;">
+                <img id="child-photo" src="">
+                <!--<div class="fill inside-border tile-menu-border"></div>-->
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown" style="display:inline-block">
+                    <span id="childname"></span><br>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                </ul>
+            </div>
+        </div>
+		<div id = "div-child-list" >
+			<ul class = "ul-activities" >
+                <li id="btn-arrive" class="child_item">
+                    <button class="tile pointable">
+                        Arrive
+                    </button>
+                </li>
+                <li id="btn-leave" class="child_item">
+                    <button class="tile pointable">
+                        Leave
+                    </button>
+                </li>
+                <li id="btn-sleep" class="child_item">
+                    <button class="tile pointable">
+                        Sleep
+                    </button>
+                </li>
+                <li id="btn-wakeup" class="child_item">
+                    <button class="tile pointable">
+                        WakeUp
+                    </button>
+                </li>
+                <li id="btn-bottle" class="child_item">
+                    <button class="tile pointable">
+                        Bottle
+                    </button>
+                </li>
+                <li id="btn-food" class="child_item">
+                    <button class="tile pointable">
+                        Food
+                    </button>
+                </li>
+                <li id="btn-drink" class="child_item">
+                    <button class="tile pointable">
+                        Drink
+                    </button>
+                </li>
+                <li id="btn-potty" class="child_item">
+                    <button class="tile pointable">
+                        Potty & Diaper
+                    </button>
+                </li>
+                <li id="btn-request" class="child_item">
+                    <button class="tile pointable">
+                        Request
+                    </button>
+                </li>
+                <li id="btn-mood" class="child_item">
+                    <button class="tile pointable">
+                        Mood
+                    </button>
+                </li>
+                <li id="btn-photo" class="child_item">
+                    <button class="tile pointable">
+                        Photo
+                    </button>
+                </li>
+                <li id="btn-comment" class="child_item">
+                    <button class="tile pointable">
+                        Note
+                    </button>
+                </li>
+            </ul>
+		</div>
+        <br>
+		<br>
+	</div>
+	<br>
+</div>
+
+<div style="padding-top:20px;width: 100%;">
+    <br>
+    <table id="summary" style="width:100%;border-collapse: collapse;">
+        <tr class="list">
+            <th style="background-color: white;text-align: center " colspan="3">Summary</th>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+    var childList = localStorage.getItem('selectedCIDs').split(',');
+    var drinkList = [], drinkNames = ["milk","water","juice","other"];
+    var reqImgs = ['/images/icons/diaper.svg', '/images/icons/wipes.svg',
+        '/images/icons/bibs.svg', '/images/icons/formula.svg'];
+    var timeurl = ['/images/icons/arrive-home.svg', '/images/icons/leave-home.svg',
+        '/images/icons/sleep.svg', '/images/icons/wakeup.svg'];
+    var moodurl = ["/images/mood-icons/focused.svg", "/images/mood-icons/friendly.svg", "/images/mood-icons/fussy.svg",
+        "/images/mood-icons/happy.svg", "/images/mood-icons/hyper.svg", "/images/mood-icons/sick.svg",
+        "/images/mood-icons/misbehaving.svg", "/images/mood-icons/needy.svg", "/images/mood-icons/tired.svg"];
+    var moods = ["Focused","Friendly","Fussy","Happy","Hyper","Sick","Misbehaving","Needy","Tired"];
+    var reqnames = ['Diapers', 'Wipes', 'Disposable Bibs', 'Baby Formula'];
+
+    var foodList = [], foodNames = [];
+    var names = [], imgpaths = [];
+    var activityFlag = 0;
+    var groupchecked = true;
+
+    var timer = $("#timer"),
+        bottle_timer = $("#bottle-timer"),
+        bottle_num = $("#bottle-num"),
+        drink_timer= $("#drink-timer"),
+        potty_timer= $("#potty-timer"),
+        mood_timer = $("#mood-timer");
+    var timer_Fields = $( [] ).add( timer),
+        bottle_Fields = $([]).add(bottle_timer).add(bottle_num),
+        drink_Fields = $([]).add(drink_timer).add($("#milk")).add($("#water")).add($("#juice")).add($("#other")),
+        potty_Fields = $([]).add(potty_timer).add($("#wet")).add($("#dry")),
+        request_Fields = $([]).add("#diapers").add($("#dry")).add($("#disposable")),
+        mood_Fields = $([]).add(potty_timer).add("#focused").add("#friendly").add("#fussy").add("#happy").add("#hyper").add("#boy").add($("#sick")).add($("#misbeahaving")).add($("#needy"));
+
+    var dialogs = ['#timer-dialog','#timer-dialog','#timer-dialog',
+        '#timer-dialog','#bottle-dialog','#food-dialog',
+        '#drink-dialog','#potty-dialog','#request-dialog',
+        '#mood-dialog','#photo-dialog','#comment-dialog','#potty-dialog'];
+
+    var timer_dialog = $( "#timer-dialog" ).dialog({
+        autoOpen: false,
+//            height: 270,
+        width: 300,
+        modal: true,
+        buttons: {
+            "Delete": function(){ deleteData();},
+            "Save": function(){ saveTime();},
+            Cancel: function() {
+                timer_dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            timer_form[0].reset();
+            timer_Fields.removeClass( "ui-state-error" );
+        }
+    });
+
+    var timer_form = timer_dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+    });
+
+    var bottle_dialog = $( "#bottle-dialog" ).dialog({
+        autoOpen: false,
+//            height: 300,
+        width: 300,
+        modal: true,
+        buttons: {
+            "Delete": function(){ deleteData();},
+            "Save": function(){ saveBottle();},
+            Cancel: function() {
+                bottle_dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            bottle_form[0].reset();
+            bottle_Fields.removeClass( "ui-state-error" );
+        }
+    });
+
+    var bottle_form = bottle_dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+    });
+
+    // Mood
+    var mood_dialog = $( "#mood-dialog" ).dialog({
+        autoOpen: false,
+        height: 370,
+        width: 400,
+        modal: true,
+        buttons: {
+            "Delete": function(){ deleteData();},
+            "Save": function(){ saveMood();},
+            Cancel: function() {
+                mood_dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            mood_form[0].reset();
+            mood_Fields.removeClass( "ui-state-error" );
+        }
+    });
+
+    var mood_form = mood_dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+    });
+
+    // potty
+    var potty_dialog = $( "#potty-dialog" ).dialog({
+        autoOpen: false,
+//            height: 300,
+//            width: 300,
+        modal: true,
+        buttons: {
+            "Delete": function(){ deleteData();},
+            "Save": function(){ savePotty();},
+            Cancel: function() {
+                potty_dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            potty_form[0].reset();
+            potty_Fields.removeClass( "ui-state-error" );
+        }
+    });
+
+    var potty_form = potty_dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+    });
+
+    // request
+    var request_dialog = $( "#request-dialog" ).dialog({
+        autoOpen: false, modal: true,
+        buttons: {
+            "Delete": function(){ deleteData();},
+            "Save": function(){ saveRequest();},
+            Cancel: function() {
+                request_dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            request_form[0].reset();
+            request_Fields.removeClass( "ui-state-error" );
+        }
+    });
+
+    var request_form = request_dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+    });
+
+    // drink
+    var drink_dialog = $( "#drink-dialog" ).dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+            "Delete": function(){ deleteData();},
+            "Save": function(){ saveDrink();},
+            Cancel: function() {
+                drink_dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            drink_form[0].reset();
+        }
+    });
+
+    var drink_form = drink_dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+    });
+
+    // comment
+    var comment_dialog = $( "#comment-dialog" ).dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+            "Delete": function(){ deleteData();},
+            "Save": function(){ saveComment();},
+            Cancel: function() {
+                comment_dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            comment_form[0].reset();
+        }
+    });
+
+    var comment_form = comment_dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+    });
+
+    // photo
+    var photo_dialog = $( "#photo-dialog" ).dialog({
+        autoOpen: false,
+        width: 300,
+        modal: true,
+        buttons: {
+            'Delete': function(){deleteData();},
+            "Save": function(){ savePhoto();},
+            Cancel: function() {
+                photo_dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            photo_form[0].reset();
+        }
+    });
+
+    var photo_form = photo_dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+    });
+    // food
+    var food_dialog = $( "#food-dialog" ).dialog({
+        autoOpen: false,
+        height: 550,
+        width: 320,
+        modal: true,
+        buttons: {
+            "Delete": function(){ deleteData();},
+            "Save": function(){ saveFood();},
+            Cancel: function() {
+                food_dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            food_form[0].reset();
+            //food_Fields.removeClass( "ui-state-error" );
+        }
+    });
+
+    var food_form = food_dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+    });
+
+    function currentDate(){
+        var ndate = new Date();
+        return ndate.getFullYear() + '-' + (ndate.getMonth()+1) + '-' + ndate.getDate();
+    }
+
+    function deleteData(){
+        var dlg = dialogs[activityFlag-1];
+        if($(dlg).attr('new')=='true') return;
+
+        $.ajax({
+            url: '/delete-note', data: {rid: $(dlg).attr('rid')}, type: 'post',
+            success: function (data) {
+                if(data.result == 'success') $('#'+data.rid).remove();
+            }
+        })
+        $(dlg).dialog("close");
+    }
+
+    // upload photo
+    function savePhoto() {
+        if(childList.length == 0){
+            alert('No selected cildren. Select child.');
+            return false;
+        }
+
+        // insert note in DB
+        var selector = $("#photo-selector");
+        if(selector[0].files[0] == undefined) {
+            alert('Select photo before Save.');
+            return false;
+        }
+
+        if(selector[0].files && selector[0].files[0]){
+            var formData = new FormData();
+            var imgpath = selector[0].files[0];
+            formData.append("photo", imgpath);
+
+            $("#photo-selector").prop("src",'');
+
+            $.ajax({
+                url: '/new-photo', data: formData, processData: false,
+                contentType: false, type: 'POST',
+                success: function(data){
+                    console.log("photo upload success");
+                    imgpath = data.imgsrc;
+                    var cont = $("#photo-note").val();
+                    var btime = ISOtimeformat();
+                    var bdate = currentDate();
+                    var cids = [];
+
+                    if(groupchecked) {
+                        cids.push('0');
+                        groupchecked = false;
+                    }else {
+                        $.each(childList, function (key, value) {
+                            cids.push(value);
+                        });
+                        groupchecked = true;
+                    }
+                    $.each(cids, function(key, value){
+                        $.ajax({
+                            url: '/new-photo-register', type: 'POST', datatype:'JSON',
+                            data: { cid : value, btime : btime, bdate : bdate, cont : cont, url : imgpath },
+                            success: function(data) {
+                                add_action(data[0].cid, data[0].rid, data[0].btime, data[0].action_content, data[0].action_id, data[0].imgsrc);//, '/images/camera.png');
+                            }
+                        })
+                    })
+                    photo_dialog.dialog( "close" );
+                },
+                error: function (xhr, status, error) {
+                    console.log("photo upload Failure");
+                }
+            });
+        }
+//        photo_dialog.dialog( "close" );
+    }
+
+    // Arrive, leave, sleep, wakeup   server:/new-note
+    function saveTime() {
+        timer_Fields.removeClass( "ui-state-error" );
+
+        if(childList.length == 0){
+            alert('No selected cildren. Select child.');
+            return false;
+        }
+
+        // insert note in DB
+        var rdate = currentDate();
+        var btime = timer.val();
+
+        if(timer_dialog.attr('new')=='true') {
+            $.each(childList, function (key, cid) {
+                $.ajax({
+                    url: "/new-note",
+                    data: {cid: cid, rdate: rdate, btime: btime, action_id: activityFlag},
+                    type: "post",
+                    dataType: "JSON",
+                    success: function (data) {
+                        add_action(data[0].cid, data[0].rid, data[0].btime, '', data[0].action_id, '');//, reqImgs[reqList[j]-1]);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("error");
+                    }
+                });
+            })
+        }else{
+            var rid = timer_dialog.attr('rid');
+            $.ajax({
+                url: "/edit-note", type: "post", dataType: "JSON", // option
+                data: {
+                    rid: rid,
+                    rdate: rdate,
+                    btime: btime,
+                    action_id: activityFlag
+                },
+                success: function (data) {
+                    if(data.result == 'success')
+                        updateRow(data.rid, data.btime, '', data.action_id, '');
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
+                }
+            });
+        }
+        timer_dialog.dialog( "close" );
+    }
+
+    // Comment server:new-bottle
+    function saveComment() {
+        if(childList.length == 0){
+            alert('No selected cildren. Select child.');
+            return false;
+        }
+
+        // insert note in DB
+        var rdate = currentDate();
+        var btime = $("#comment-timer").val();
+        var cont = $("#comment-note").val();
+        if(comment_dialog.attr('new')=='true'){
+            $.each(childList, function(key, cid){
+                $.ajax({
+                    url: "/new-comment", type:"post",
+                    data:{cid:cid, rdate:rdate, btime:btime,action_id:activityFlag, note:cont},
+                    dataType: "JSON", // option
+                    success: function (data) {
+                        add_action(data[0].cid, data[0].rid, data[0].btime, data[0].action_note, data[0].action_id,'');//, reqImgs[reqList[j]-1]);
+                    },
+                    error: function (xhr, status, error) {	alert("error");	}
+                });
+            })
+        }else{
+            var rid = comment_dialog.attr('rid');
+            $.ajax({
+                url: "/edit-comment", type: "post", dataType: "JSON", // option
+                data: {
+                    rid: rid,
+                    rdate: rdate,
+                    btime: btime,
+                    action_id:activityFlag,
+                    note: cont
+                },
+                success: function (data) {
+                    if(data.result == 'success')
+                        updateRow(data.rid, data.btime, data.action, data.action_id, '');
+//                    loadActions(childList);
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
+                }
+            });
+        }
+
+        comment_dialog.dialog( "close" );
+    }
+
+    // Bottle server:new-bottle
+    function saveBottle() {
+        bottle_Fields.removeClass( "ui-state-error" );
+
+        if(childList.length == 0){
+            alert('No selected cildren. Select child.');
+            return false;
+        }
+
+        // insert note in DB
+        var rdate = currentDate();
+        var btime =bottle_timer.val();
+        var action_content = bottle_num.val();
+        if(bottle_dialog.attr('new')=='true'){
+            $.each(childList, function(key, cid){
+                $.ajax({
+                    url: "/new-bottle", type:"post", dataType: "JSON", // option
+                    data:{cid:cid, rdate:rdate, btime:btime,action_id:activityFlag, action_content:action_content},
+                    success: function (data) {
+                        add_action(data[0].cid, data[0].rid, data[0].btime, data[0].action_content, data[0].action_id,'');//, '/images/baby-bottle.png');
+                    },
+                    error: function (xhr, status, error) {	alert("error");	}
+                });
+            })
+        }else{
+            var rid = bottle_dialog.attr('rid');
+            $.ajax({
+                url: "/edit-bottle", type: "post", dataType: "JSON", // option
+                data: {
+                    rid: rid,
+                    rdate: rdate,
+                    btime: btime,
+                    action_id:activityFlag,
+                    action_content: action_content
+                },
+                success: function (data) {
+                    if(data.result == 'success')
+                        updateRow(data.rid, data.btime, data.action, data.action_id, '');
+//                    loadActions(childList);
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
+                }
+            });
+        }
+        bottle_dialog.dialog( "close" );
+    }
+
+    // Food server:new-bottle
+    function saveFood() {
+        if(childList.length == 0){
+            alert('No selected cildren. Select child.');
+            return false;
+        }
+
+        // insert note in DB
+        var rdate = currentDate();
+        var btime = ISOtimeformat();
+        var action_content = foodList.join();
+
+        if(food_dialog.attr('new')=='true'){
+            $.each(childList, function(key, cid){
+                $.ajax({
+                    url: "/new-bottle", type:"post", dataType: "JSON", // option
+                    data:{cid:cid, rdate:rdate, btime:btime,action_id:activityFlag, action_content:action_content},
+                    success: function (data) {
+                        add_action(data[0].cid, data[0].rid, data[0].btime, data[0].action_content, data[0].action_id,'');//, reqImgs[reqList[j]-1]);
+                    },
+                    error: function (xhr, status, error) {	alert("error");	}
+                });
+            })
+        }else{
+            var rid = food_dialog.attr('rid');
+            $.ajax({
+                url: "/edit-bottle", type: "post", dataType: "JSON", // option
+                data: {
+                    rid: rid,
+                    rdate: rdate,
+                    btime: btime,
+                    action_id:activityFlag,
+                    action_content: action_content
+                },
+                success: function (data) {
+                    if(data.result == 'success')
+                        updateRow(data.rid, data.btime, data.action, data.action_id, '');
+//                    loadActions(childList);
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
+                }
+            });
+        }
+
+        food_dialog.dialog( "close" );
+    }
+
+    // Drink server:new-bottle
+    function saveDrink() {
+        drink_Fields.removeClass( "ui-state-error" );
+
+        if(childList.length == 0){
+            alert('No selected cildren. Select child.');
+            return false;
+        }
+
+        // insert note in DB
+        var rdate = currentDate();
+        var btime = drink_timer.val();
+        var drinks = [];
+
+        var action_content = drinkList.join();
+
+        if(drink_dialog.attr('new')=='true'){
+            $.each(childList, function(key, cid){
+                $.ajax({
+                    url: "/new-bottle", type:"post", dataType: "JSON",
+                    data:{cid:cid, rdate:rdate, btime:btime,action_id:activityFlag, action_content:action_content},
+                    success: function (data) {
+                        add_action(data[0].cid, data[0].rid, data[0].btime, data[0].action_content, data[0].action_id,'');//, reqImgs[reqList[j]-1]);
+                    },
+                    error: function (xhr, status, error) {	alert("error");	}
+                });
+            })
+        }else{
+            var rid = drink_dialog.attr('rid');
+            $.ajax({
+                url: "/edit-bottle", type: "post", dataType: "JSON", // option
+                data: {
+                    rid: rid,
+                    rdate: rdate,
+                    btime: btime,
+                    action_id:activityFlag,
+                    action_content: action_content
+                },
+                success: function (data) {
+                    if(data.result == 'success')
+                        updateRow(data.rid, data.btime, data.action, data.action_id, '');
+//                    loadActions(childList);
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
+                }
+            });
+        }
+        drink_dialog.dialog( "close" );
+    }
+
+    // Mood server:new-bottle
+    function saveMood() {
+        mood_Fields.removeClass( "ui-state-error" );
+
+        if(childList.length == 0){
+            alert('No selected cildren. Select child.');
+            return false;
+        }
+
+        // insert note in DB
+        var rdate = currentDate();
+        var btime = mood_timer.val();
+        var action_content = "";
+        if($("#focused").prop( "checked")) action_content = "1";
+        if($("#friendly").prop( "checked")) action_content = "2";
+        if($("#fussy").prop( "checked")) action_content = "3";
+        if($("#happy").prop( "checked")) action_content = "4";
+        if($("#hyper").prop( "checked")) action_content = "5";
+        if($("#sick").prop( "checked")) action_content = "6";
+        if($("#misbeahaving").prop( "checked")) action_content = "7";
+        if($("#needy").prop( "checked")) action_content = "8";
+        if($("#tired").prop( "checked")) action_content = "9";
+
+        if(mood_dialog.attr('new')=='true') {
+            $.each(childList, function (key, cid) {
+                $.ajax({
+                    url: "/new-bottle",
+                    type: "post",
+                    data: {
+                        cid: cid,
+                        rdate: rdate,
+                        btime: btime,
+                        action_id: activityFlag,
+                        action_content: action_content
+                    },
+                    dataType: "JSON", // option
+                    success: function (data) {
+                        add_action(data[0].cid, data[0].rid, data[0].btime, data[0].action_content, data[0].action_id, '');//, reqImgs[reqList[j]-1]);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("error");
+                    }
+                });
+            })
+        }else{
+            var rid = mood_dialog.attr('rid');
+            $.ajax({
+                url: "/edit-bottle", type: "post", dataType: "JSON", // option
+                data: {
+                    rid: rid,
+                    rdate: rdate,
+                    btime: btime,
+                    action_id:activityFlag,
+                    action_content: action_content
+                },
+                success: function (data) {
+                    if(data.result == 'success')
+                        updateRow(data.rid, data.btime, data.action, data.action_id, '');
+//                    loadActions(childList);
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
+                }
+            });
+        }
+        mood_dialog.dialog( "close" );
+    }
+
+    // Potty server:new-bottle
+    function savePotty() {
+        potty_Fields.removeClass( "ui-state-error" );
+
+        if(childList.length == 0){
+            alert('No selected cildren. Select child.');
+            return false;
+        }
+
+        // insert note in DB
+        var rdate = currentDate();
+        var btime = potty_timer.val();
+
+        var action_content = [], cont="";
+        if($("#wet").prop( "checked")) action_content.push("1");
+        if($("#dry").prop( "checked")) action_content.push("2");
+
+        cont = action_content.join();
+
+        if($("#diaper").prop("checked")) activityFlag = '8';
+        else             activityFlag = '13';
+
+        if(potty_dialog.attr('new')=='true') {    // Save New data when press button
+            $.each(childList, function (key, cid) {
+                $.ajax({
+                    url: "/new-bottle", type: "post", dataType: "JSON", // option
+                    data: {
+                        cid: cid,
+                        rdate: rdate,
+                        btime: btime,
+                        action_id: activityFlag,
+                        action_content: cont
+                    },
+                    success: function (data) {
+                        add_action(data[0].cid, data[0].rid, data[0].btime, data[0].action_content, data[0].action_id, '');//, reqImgs[reqList[j]-1]);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("error");
+                    }
+                });
+            })
+        }else{
+            var rid = potty_dialog.attr('rid');
+            $.ajax({
+                url: "/edit-bottle", type: "post", dataType: "JSON", // option
+                data: {
+                    rid: rid,
+                    rdate: rdate,
+                    btime: btime,
+                    action_id:activityFlag,
+                    action_content: cont
+                },
+                success: function (data) {
+                    if(data.result == 'success')
+                        updateRow(data.rid, data.btime, data.action, data.action_id, '');
+                    //loadActions(childList);
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
+                }
+            });
+        }
+        potty_dialog.dialog( "close" );
+    }
+
+    // Request server:new-bottle
+    function saveRequest() {
+        request_Fields.removeClass( "ui-state-error" );
+
+        if(childList.length == 0){
+            alert('No selected cildren. Select child.');
+            return false;
+        }
+        var reqList = [];
+        // insert note in DB
+        var rdate = currentDate();
+        var btime = ISOtimeformat();
+
+        if($("#diapers").prop( "checked")) reqList.push("1");
+        if($("#wipe").prop( "checked")) reqList.push("2");
+        if($("#disposable").prop( "checked")) reqList.push("3");
+        if($("#formula").prop( "checked")) reqList.push("4");
+
+        var action_content = reqList.join();
+
+        if(request_dialog.attr('new')=='true') {    // Save New data when press button
+            $.each(childList, function (key, cid) {
+                $.ajax({
+                    url: "/new-bottle", type: "post", dataType: "JSON", // option
+                    data: {
+                        cid: cid,
+                        rdate: rdate,
+                        btime: btime,
+                        action_id: activityFlag,
+                        action_content: action_content
+                    },
+                    success: function (data) {
+                        add_action(data[0].cid, data[0].rid, data[0].btime, data[0].action_content, data[0].action_id, '');//, reqImgs[reqList[j]-1]);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("error");
+                    }
+                });
+            })
+        }else{      // Change data of Summary
+//            var cid = request_dialog.attr('cid');
+            var rid = request_dialog.attr('rid');
+            $.ajax({
+                url: "/edit-bottle", type: "post", dataType: "JSON", // option
+                data: {
+                    rid: rid,
+                    rdate: rdate,
+                    btime: btime,
+                    action_id:activityFlag,
+                    action_content: action_content
+                },
+                success: function (data) {
+                    if(data.result == 'success')
+                    updateRow(data.rid, data.btime, data.action, data.action_id, '');
+                    //loadActions(childList);
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
+                }
+            });
+
+        }
+        request_dialog.dialog( "close" );
+    }
+
+    function hide(){
+        $('#notify').attr({'style':'display:none'});
+    }
+
+    function initFoodTable(){
+        $.ajax({
+            url:"/getfoodlist", type:"get", dataType:"JSON",
+            success:function(data){
+                var foodtable = $("#foodtable");
+                var food1 = "", icon1='', food2='', icon2='';
+                var shtml = "";
+                for(var i=0; i<data.length; i+=2){
+                    food1 = data[i].food; icon1 = data[i].icon;
+                    if (icon1==undefined) icon1 = '';
+
+                    if(i+1 == data.length) {
+                        food2 = ''; icon2 = '';
+                    }else{
+                        food2 = data[i+1].food; icon2 = data[i+1].icon;
+                        if (icon2==undefined) icon2 = '';
+                    }
+
+                    foodNames.push(food1); foodNames.push(food2);
+
+                    shtml =  '<tr class="list">';
+                    shtml += '<td class="foodcell" id="fcell'+ i +'" fval="'+ i +'" style="background-image:url('+icon1+');">';
+//                    shtml += '<img class="fimg" src="'+icon1+'">';
+                    shtml += food1;
+                    shtml += '</td>';
+                    shtml += '<td class="foodcell" id="fcell'+ (i+1) +'" fval="'+ (i+1) +'" style="background-image:url('+icon2+');">';
+//                    shtml += '<img class="fimg" src="'+icon2+'">';
+                    shtml += food2;
+                    shtml += '</td>';
+                    shtml += '</tr>';
+
+                    foodtable.append(shtml);
+
+                    $("#fcell"+ (i+1)).on("click", function(){
+                        //alert('1');
+                        var food = $(this).attr('fval');
+                        if(food == undefined) return;
+
+                        if (foodList.indexOf(food) < 0){
+                            if(foodList.length < 5){
+                                foodList.push(food);
+                                $(this).css("color", "#f00");
+                            }
+                        }else{
+                            $(this).css("color", "#000");
+                            foodList.splice(foodList.indexOf(food), 1);
+                        }
+                        console.log(foodList);
+                    })
+
+                    $("#fcell"+ i).on("click", function(){
+                        //alert('1');
+                        var food = $(this).attr('fval');
+                        if(food == undefined) return;
+                        if (foodList.indexOf(food) < 0){
+                            if(foodList.length < 5) {
+                                foodList.push(food);
+                                $(this).css("color", "#f00");
+                            }
+                        }else{
+                            $(this).css("color", "#000");
+                            foodList.splice(foodList.indexOf(food), 1);
+                        }
+                        console.log(foodList);
+                    })
+                }
+            },
+            error:function(xhr, status, error) { alert("error") }
+        })
+    }
+
+    function loadChildData(cidList){
+        if(cidList.length == 0 || cidList == undefined) return;
+
+        var cids = cidList.join();
+        $.ajax({
+            url : "/getChildData?cids=" + cids,
+            dataType : "JSON", async : false,
+            success : function(data) {
+                var childData = data;
+                if (childData != undefined) {
+                    for (var i = 0; i < childData.length; i++) {
+                        var namepart = (childData[i].cname).trim().split(' ');
+                        var name = namepart[0].substr(0,1).toUpperCase() + namepart[0].substr(1);
+                        if(namepart.length > 1)
+                            name += " " + namepart[1].substr(0,1).toUpperCase() + namepart[1].substr(1);
+
+                        names.push(name);
+                        imgpaths.push(childData[i].imgsrc);
+                        $('.dropdown-menu').append('<li style="height:20px; text-indent: 10px;">'+ name +'</li>')
+                    }
+
+                    if(childData.length == 1) {
+                        $("#childname").html(names[0]);
+                        $("#div-photoline").height(100);
+                        $(".caret").hide();
+                        $("#child-photo").attr("src", imgpaths[0]);
+                    }else {
+                        $(".caret").show();
+                        $("#div-photoline").height(50);
+                        $("#childname").html(childData.length + " Children");
+                        $("#child-photo").attr("src", '/images/group1Asset 1.png');
+                    }
+                    console.log(names);
+                }
+            },
+            error: function (xhr, status, error) { alert("error") }
+        })
+    }
+
+    function ISOtimeformat(){
+        var ndate = new Date();
+        var tstr = ndate.getHours() + ":";
+        if(ndate.getHours() < 10) tstr = "0" + tstr;
+        if(ndate.getMinutes() < 10) tstr = tstr.concat("0", ndate.getMinutes());
+        else                        tstr = tstr.concat(ndate.getMinutes());
+
+        return tstr;
+    }
+
+    function updateTips( t ) {
+        tips.text( t ).addClass( "ui-state-highlight" );
+        setTimeout(function() {
+            tips.removeClass( "ui-state-highlight", 1500 );
+        }, 500 );
+    }
+
+    function loadActions(cidList){
+        if(cidList.length == 0 || cidList == undefined) return;
+
+        $('#summary').empty();
+        $('#summary').append('<th style="background-color:white;text-align:center;" colspan="3">Summary</th>');
+
+        $.each(cidList, function(key, val){
+            $.ajax({
+                url: "/getChildAction",
+                data:{cid:val, name:names[key]},
+                dataType: "JSON",
+                success: function (rows) {
+//                    console.log(rows);
+                    $.each(rows, function(key, row){
+                        var cont = (row.action_id * 1 == 12 )? row.action_note: row.action_content;
+                        add_action(row.cid, row.id, row.btime, cont, row.action_id,'');
+                    })
+                }
+            })
+        })
+    }
+
+    // 1:Arrive, 2:Leave, 3:Sleep, 4:Wakeup, 5:Bottle, 6:Food, 7:Drink, 8:Diapper&Potty, 9:Request, 10:Mood, 11:Photo
+    function updateRow(rid, stime, scont, act_id, imgurl) {
+        var cont = "", sname='', namepart = "", name = "", surl='';
+        var time = isoTime2Local(stime);
+
+        var cid =  $('#'+rid).attr('cid');
+
+        sname = names[childList.indexOf(cid+'')];
+        if(sname != ''){
+            namepart = (sname).trim().split(' ');
+            name = namepart[0].substr(0,1).toUpperCase() + namepart[0].substr(1);
+            if(namepart.length > 1)
+                name += " " + namepart[1].substr(0,1).toUpperCase() + ".";
+        }
+
+        switch (act_id * 1) {
+            case 1: cont = name + " Arrived"; surl = timeurl[0]; break;
+            case 2: cont = name + " Leaved"; surl = timeurl[1];  break;
+            case 3: cont = name + " Slept"; surl = timeurl[2];   break;
+            case 4: cont = name + " Woke up"; surl = timeurl[3];  break;
+            case 5: cont = name + " Drank " + scont + 'oz'; surl = '/images/icons/baby-bottle.svg'; break;
+            case 6: cont = name + " Ate "; surl = '/images/icons/food.svg';    break;
+            case 7: cont = name + " Drank "; surl = '/images/icons/drinkcup.svg';   break;
+            case 8: var ss = [], conts = ['Wet', 'Dry'];
+                $.each(scont.split(','), function(key, val){ ss.push(conts[val - 1]); })
+                cont = name + " Diaper " + ss.join(', '); surl = '/images/icons/diaper.svg'; break;
+            case 13: var ss = [], conts = ['Wet', 'Dry'];
+                $.each(scont.split(','), function(key, val){ ss.push(conts[val - 1]); })
+                cont = name + " Went Potty: " + ss.join(', '); surl = '/images/icons/toilet.svg'; break;
+            case 9: var ss = [];
+                $.each(scont.split(','), function(key, val){ ss.push(reqnames[val - 1])})
+                cont = name + " Request : " + ss.join(', ');   surl = '/images/icons/diaper.svg';  break;
+            case 10: cont = name + " " +  moods[scont*1-1]; surl = moodurl[scont*1-1]; break;
+            case 11: cont = name + " Photo";  surl = '/images/icons/camera.svg'; break;
+            case 12: cont = name + "Note"; surl = '/images/icons/note.svg'; break;
+        }
+
+        $('#'+rid).attr('time',stime);
+        $('#'+rid).attr('cont',scont);
+        $('#'+rid).attr('act_id',act_id);
+        if(imgurl != '') $('#'+rid).attr('imgsrc',imgurl);
+        $('#'+rid+' td:first-child img').attr('src',surl);
+        $('#'+rid+' td:nth-child(2)').html(cont + ' at ' + time);
+    }
+
+    // 1:Arrive, 2:Leave, 3:Sleep, 4:Wakeup, 5:Bottle, 6:Food, 7:Drink, 8:Diapper&Potty, 9:Request, 10:Mood, 11:Photo
+    function add_action(cid, rid, stime, scont, act_id, imgurl) {
+        var cont = "", sname='', namepart = "", name = "", surl='';
+        var time = isoTime2Local(stime);
+
+        sname = names[childList.indexOf(cid+'')];
+        if(sname != undefined){
+            namepart = (sname).trim().split(' ');
+            name = namepart[0].substr(0,1).toUpperCase() + namepart[0].substr(1);
+            if(namepart.length > 1)
+                name += " " + namepart[1].substr(0,1).toUpperCase() + ".";
+        }
+
+        switch (act_id * 1) {
+            case 1: cont = name + " Arrived"; surl = timeurl[0]; break;
+            case 2: cont = name + " Leaved"; surl = timeurl[1];  break;
+            case 3: cont = name + " Slept"; surl = timeurl[2];   break;
+            case 4: cont = name + " Woke up"; surl = timeurl[3];  break;
+            case 5: cont = name + " Drank " + scont + 'oz'; surl = '/images/icons/baby-bottle.svg'; break;
+            case 6: cont = name + " Ate "; surl = '/images/icons/food.svg';    break;
+            case 7: cont = name + " Drank "; surl = '/images/icons/drinkcup.svg';   break;
+            case 8: var ss = [], conts = ['Wet', 'Dry'];
+                $.each(scont.split(','), function(key, val){ ss.push(conts[val - 1]); })
+                cont = name + " Diaper " + ss.join(', '); surl = '/images/icons/diaper.svg'; break;
+            case 13: var ss = [], conts = ['Wet', 'Dry'];
+                $.each(scont.split(','), function(key, val){ ss.push(conts[val - 1]); })
+                cont = name + " Went Potty: " + ss.join(', '); surl = '/images/icons/toilet.svg'; break;
+            case 9: var ss = [];
+                $.each(scont.split(','), function(key, val){ ss.push(reqnames[val - 1])})
+                cont = name + " Request : " + ss.join(', ');   surl = '/images/icons/diaper.svg';  break;
+            case 10: cont = name + " " +  moods[scont*1-1]; surl = moodurl[scont*1-1]; break;
+            case 11: cont = name + " Photo";  surl = '/images/icons/camera.svg'; break;
+            case 12: cont = name + "Note"; surl = '/images/icons/note.svg'; break;
+        }
+
+        var row = '<tr class="list" cid="'+cid+'" id="'+rid+'" rid="'+rid+'" time="'+stime+'" cont="'+scont+'" act_id="'+act_id+'" imgsrc="'+imgurl+'">' +
+            '<td class="cell" style="width:50px;">' +
+            '<img style="max-width:50px; max-height:50px;" src="' + surl + '">' +
+            '</td>' +
+            '<td class="cell">' + cont + ' at ' + time + '</td>' +
+            '</tr>';
+        //            console.log(row);
+        $("#summary").append(row);
+        /******************************
+         * Summary Row Click Event
+         ********************************/
+        $('tr.list').click( function(){
+
+            var cid = $(this).attr('cid'), rid = $(this).attr('id');
+            var time = $(this).attr('time'), cont = $(this).attr('cont');
+            var act_id = $(this).attr('act_id'), imgpath = $(this).attr('imgsrc');
+
+            $(dialogs[act_id * 1-1]).attr('new', 'false');
+            $(dialogs[act_id * 1-1]).attr('rid', rid);
+            $(dialogs[act_id * 1-1]).attr('cid', cid);
+
+            switch(act_id * 1){
+                case 1:
+                    activityFlag = "1";
+                    timer.val(time);
+                    timer_dialog.dialog( "option", "title", "Arrive" );
+                    timer_dialog.dialog("open");
+                    break;
+                case 2:
+                    activityFlag = "2";
+                    timer.val(time);
+                    timer_dialog.dialog( "option", "title", "Leave" );
+                    timer_dialog.dialog("open");
+                    break;
+                case 3:
+                    activityFlag = "3";
+                    timer.val(time);
+                    timer_dialog.dialog( "option", "title", "Sleep" );
+                    timer_dialog.dialog("open");
+                    break;
+                case 4:
+                    activityFlag = "4";
+                    timer.val(time);
+                    timer_dialog.dialog( "option", "title", "Woke Up" );
+                    timer_dialog.dialog("open");
+                    break;
+                case 5:
+                    activityFlag = "5";
+                    bottle_timer.val(time);
+                    $('#bottle-num').val(cont);
+                    bottle_dialog.dialog("open");
+                    break;
+                case 6:
+                    activityFlag = "6";
+                    $("#foodtable td").css("color", "black");
+                    foodList = cont.split(',');
+
+                    $.each(foodList, function(key, food){
+                        $('#fcell'+food).css('color','red');
+                    })
+
+                    food_dialog.dialog("open");
+                    break;
+                case 7:
+                    activityFlag = "7";
+                    drinkList = cont.split(',');
+                    $.each(drinkList, function(key, val){
+                        if(val=='1') $('#milk').prop('checked', true);
+                        if(val=='2') $('#water').prop('checked', true);
+                        if(val=='3') $('#juice').prop('checked', true);
+                        if(val=='4') $('#other').prop('checked', true);
+                    })
+                    drink_timer.val(time);
+                    drink_dialog.dialog("open");
+                    break;
+                case 8:
+                    activityFlag = "8";
+                    potty_timer.val(time);
+                    $('#diaper').prop('checked',true);
+                    if(cont.includes('1')) $('#wet').prop('checked', true);
+                    else  $('#wet').prop('checked', false);
+                    if(cont.includes('2')) $('#dry').prop('checked', true);
+                    else  $('#dry').prop('checked', false);
+                    potty_dialog.dialog("open");
+                    break;
+                case 9:
+                    activityFlag = "9";
+                    $('#request-dialog input[type="checkbox"]').prop('checked', false);
+
+                    if(cont.includes('1')) $('#diapers').prop('checked', true);
+                    if(cont.includes('2')) $('#wipe').prop('checked', true);
+                    if(cont.includes('3')) $('#disposable').prop('checked', true);
+                    if(cont.includes('4')) $('#formula').prop('checked', true);
+
+                    request_dialog.dialog("open");
+                    break;
+                case 10:
+                    var rdoname = ['#focused','#Friendly','#Fussy','#Happy','#Hyper','#Sick','#Misbeahaving','#Needy','#Tired'];
+                    activityFlag = "10";
+                    $(rdoname[cont*1-1]).prop('checked', false);
+                    mood_timer.val(time);
+                    mood_dialog.dialog("open");
+                    break;
+                case 11:
+                    activityFlag = "11";
+                    $('#groupcheck').prop('checked', true);
+                    $('#photo').attr('src', imgpath);
+                    $('#photo-note').val(cont);
+                    photo_dialog.dialog("open");
+                    groupchecked = true;
+                    break;
+                case 12:
+                    activityFlag = "12";
+                    $("#comment-timer").val(time);
+                    $("#comment-note").val(cont);
+                    comment_dialog.dialog("open");
+                    break;
+                case 13:
+                    activityFlag = "13";
+                    potty_timer.val(time);
+                    $('#potty').prop('checked',true);
+                    if(cont.includes('1')) $('#wet').prop('checked', true);
+                    else  $('#wet').prop('checked', false);
+                    if(cont.includes('2')) $('#dry').prop('checked', true);
+                    else  $('#dry').prop('checked', false);
+                    potty_dialog.dialog("open");
+                    break;
+            }
+        })
+    }
+
+    $("#bottle-plus").click(function(){
+        var old = parseFloat(bottle_num.val());
+        if(old < 99) bottle_num.val(old + 1);
+    });
+
+    $("#bottle-minus").click(function(){
+        var old = parseFloat(bottle_num.val());
+        if(old > 0) bottle_num.val(old - 1);
+    });
+
+    $("#drinkTable input").click(function() {
+        var drink = $(this).val();
+        if ($(this).is(":checked")) {
+            if (drinkList.indexOf(drink) < 0) drinkList.push(drink);
+        } else {
+            drinkList.splice(drinkList.indexOf(drink), 1);
+        }
+        console.log(drinkList);
+    })
+
+    $("#photo-selector").change(function(){
+        var selector = $("#photo-selector");
+        if(selector[0].files && selector[0].files[0]){
+            var reader = new FileReader();
+            reader.readAsDataURL(selector[0].files[0]);
+            reader.onload = function (e) {
+                $('#photo').attr('src', e.target.result);
+            }
+        }
+    })
+
+    $('#photo').on("load", function(){
+        $(this).css("margin-top", ($(this).parent().height()- $(this).height())/2);
+    })
+    //
+    // when press button Arrive
+    $("#btn-arrive").click(function(){
+        timer.val(ISOtimeformat());
+        $('#timer-dialog').attr('new', 'true');
+        timer_dialog.dialog( "option", "title", "Arrive" );
+        timer_dialog.dialog("open");
+        activityFlag = "1";
+    })
+
+    // when press button leave
+    $("#btn-leave").click(function(){
+        $('#timer-dialog').attr('new', 'true');
+        timer.val(ISOtimeformat());
+        timer_dialog.dialog( "option", "title", "Leave" );
+        timer_dialog.dialog("open");
+        activityFlag = "2";
+    })
+
+    // when press button Sleep
+    $("#btn-sleep").click(function(){
+        $('#timer-dialog').attr('new', 'true');
+        timer.val(ISOtimeformat());
+        timer_dialog.dialog( "option", "title", "Sleep" );
+        timer_dialog.dialog("open");
+        activityFlag = "3";
+    })
+
+    // when press button Wakeup
+    $("#btn-wakeup").click(function(){
+        $('#timer-dialog').attr('new', 'true');
+        timer.val(ISOtimeformat());
+        timer_dialog.dialog( "option", "title", "WakeUp" );
+        timer_dialog.dialog("open");
+        activityFlag = "4";
+    })
+
+    // when press button Bottle
+    $("#btn-bottle").click(function(){
+        $('#bottle-dialog').attr('new','true');
+        bottle_timer.val(ISOtimeformat());
+        bottle_dialog.dialog("open");
+        activityFlag = "5";
+    })
+
+    // when press button Food
+    $("#btn-food").click(function(){
+        $('#food-dialog').attr('new', 'true');
+        foodList = [];
+        $("#foodtable td").css("color", "black");
+        food_dialog.dialog("open");
+        activityFlag = "6";
+    })
+
+    // when press button Drink
+    $("#btn-drink").click(function(){
+        $('#drink-dialog').attr('new', 'true');
+        drinkList = [];
+        drink_timer.val(ISOtimeformat());
+        drink_dialog.dialog("open");
+        activityFlag = "7";
+    })
+
+    // when press button potty
+    $("#btn-potty").click(function(){
+        $('#potty-dialog').attr('new', 'true');
+        potty_timer.val(ISOtimeformat());
+        potty_dialog.dialog("open");
+        activityFlag = "8";
+    })
+
+    // when press button
+    $("#btn-request").click(function(){
+        $('#request-dialog').attr('new', 'true');
+        request_dialog.dialog("open");
+        activityFlag = "9";
+    })
+
+    // when press button Mood
+    $("#btn-mood").click(function(){
+        $('#mood-dialog').attr('new', 'true');
+        mood_timer.val(ISOtimeformat());
+        mood_dialog.dialog("open");
+        activityFlag = "10";
+    })
+
+    // when press button Photo
+    $("#btn-photo").click(function(){
+        $('#photo-dialog').attr('new', 'true');
+        photo_dialog.dialog("open");
+        groupchecked = true;
+        activityFlag = "11";
+    })
+
+    // when press button Commemt
+    $("#btn-comment").click(function(){
+        $('#comment-dialog').attr('new','true');
+        $("#comment-timer").val(ISOtimeformat());
+        $("#comment-note").val("");
+        comment_dialog.dialog("open");
+        activityFlag = "12";
+    })
+
+    $(".glyphicon-camera").click(function(){
+        $("#wrapper").click();
+    })
+
+    $("#groupcheck").click(function(){
+        groupchecked = !groupchecked;
+    })
+
+    $(document).ready(function() {
+
+        // 1:Arrive, 2:Leave, 3:Sleep, 4:Wakeup, 5:Bottle, 6:Food,
+        // 7:Drink, 8:Diapper&Potty, 9:Request, 10:Mood, 11:Photo, 12:Comment
+        if(childList.length == 0)
+            alert('No selected children. Select child.');
+        loadChildData(childList);
+        initFoodTable();
+        loadActions(childList);
+
+        $('#div-child-list').css('margin-left', ($(window).width() % 85)/2);
+
+    })
+
+</script>
+
+</body>
+</html>

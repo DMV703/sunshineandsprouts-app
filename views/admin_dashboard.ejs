@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>Sunshine &amp; Sprouts App</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/jquery-ui.min.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <link rel='stylesheet' type="text/css" href='/stylesheets/admin_dashboard.css' />
+</head>
+<script src="/javascripts/jquery.3.1.1.min.js"></script>
+<script src="/javascripts/jquery-ui.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/common.js"></script>
+
+<body>
+
+<div id="add-child" title="Add New Child" style="display:none;" >
+    <input type="text" id="cname1" placeholder="First Name">
+    <input type="text" id="cname2" placeholder="Last Name">
+</div>
+
+<div id="add-faculty" title="Add Faculty" style="display:none;" class="addclass">
+    <input type="text" id="fname1" placeholder="First Name">
+    <input type="text" id="fname2" placeholder="Last Name">
+</div>
+
+<div id="delete-child" title="Delete Child" style="display:none;" class="delclass">
+    <select id="clist" >
+        <option>Select Child</option>
+    </select>
+</div>
+
+<div id="delete-faculty" title="Delete Faculty" style="display:none;" class="delclass">
+    <p> Are you sure to delete Faculty? </p>
+</div>
+
+<!-- Modal alert -->
+<div class="modal fade" id="alertModal" role="dialog">
+    <div class="modal-dialog alert alert-danger">
+        <p></p>
+    </div>
+</div>
+
+<!-- Modal Success -->
+<div class="modal fade" id="successModal" role="dialog">
+    <div class="modal-dialog alert alert-success">
+        <p></p>
+    </div>
+</div>
+
+<!-- Modal alertButton -->
+<div class="modal fade" id="alertButtonModal" role="dialog">
+    <div class="modal-dialog alert alert-danger">
+        <p></p>
+        <button id="btnYes" class="btn btn-danger" data-dismiss="modal">Yes</button>
+        <button id="btnNo" class="btn btn-danger" data-dismiss="modal">No</button>
+    </div>
+</div>
+
+    <div id="div-head">
+		<h2 style="display:inline-block;">Sunshine &amp; Sprouts</h2>
+
+        <div class="dropdown setting">
+            <button class="btn btn-default dropdown-toggle" type="button" id="btn-setting" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" id="ul-setting">
+                <li id="uname" class="center-bold"></li>
+                <li id="uposition" class="center-bold"></li>
+                <li id="ufacility" class="center-bold"></li>
+                <li class="divider"></li>
+                <li class="center-bold">Add User</li>
+                <li id="addChildBtn">Child</li>
+                <li class="divider hcalss"></li>
+                <li id="addFacultyBtn" class="hcalss">Faculty</li>
+                <li class="divider hcalss"></li>
+                <li class="center-bold hclass">Delete User</li>
+                <li id="delChildBtn" class="hcalss">Child</li>
+                <li class="divider hcalss"></li>
+                <li id="delFacultyBtn" class="hcalss">Faculty</li>
+                <!--<li class="divider"></li>-->
+                <li id="signout" class="center-bold-invert">Sign Out</li>
+            </ul>
+        </div>
+	</div>   
+    <div id="div-body">
+        <div id="notify" style="display: none;width:100%; height:250px;background-color:#00b7ff;">
+            <br>
+            <h3 style="text-align: center" id="msg"></h3>
+            <button onclick="hide();" style="width:20%;height:30px;margin-left: 40%;">Close</button>
+            <br>
+        </div>
+        
+        <div id="div-main">
+            <div class="row" >
+                <div class="col-xs-6">
+                    <button id="btnOnMyWay" onclick="onmyway();"></button>
+                </div>
+                <div class="col-xs-6">
+                    <button id="btnTimeLine" onclick="location.href='/timeline';"></button>
+                </div>
+                
+            </div>
+            <div class="row">
+<!--
+                <div class="span6" style="text-align: center;">
+                    <button id="btnProfile" onclick="location.href='/select-profile';"></button>
+                </div>
+-->
+                <div class="col-xs-6">
+                    <button id="btnActivity" onclick="location.href='/admin-activity';"></button>
+                </div>
+                <div class="col-xs-6">
+                    <button id="btnCalender" onclick="location.href='/calendar';"></button>
+                </div>
+            </div>
+            <div class="row">
+				<div class="col-xs-6">                    
+                    <button id="btnMessenger" onclick="location.href='/select-chat';"></button>
+                </div>                
+                <div class="col-xs-6">
+                    <button id="btnReports" onclick="location.href='/admin-report';"></button>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div id="footer-img"></div>
+    <div id="div-bottom">
+        <span class="glyphicon glyphicon-user"></span>
+        <span class="glyphicon glyphicon-earphone "></span>
+    </div>
+
+    <script type="text/javascript">
+        //   var socket = io.connect("http://ec2-54-147-107-47.compute-1.amazonaws.com:8080/");
+        var uid = '<%=uid%>';
+        var nm = '<%=nname%>';
+        var grd = '<%=grade%>';
+        var facility;
+
+        localStorage.setItem('uid', uid);
+        localStorage.setItem('nickname', nm);
+        localStorage.setItem('grade', grd);
+
+        console.log('nickname='+nm + " grade="+grd);
+
+        var onmywayDown = false;
+
+        function showAlert(msg){
+            $('#alertModal p').html(msg);
+            $('#alertModal').modal();
+        }
+
+        function showAlertBtn(msg){
+            $('#alertButtonModal p').html(msg);
+            $('#alertButtonModal').modal();
+        }
+
+        function showSuccess(msg){
+            $('#successModal p').html(msg);
+            $('#successModal').modal();
+        }
+
+        function loadSettingMenu() {
+            $.ajax({
+                url : '/getUserData',
+                success:function(data){
+                    if (data != null) {
+                        $('#uname').html(data[0].user_name);
+                        if (data[0].grade == '1')
+                            $('#uposition').html('Owner');
+                        else
+                            $('#uposition').html('Care Provider');
+
+                        if (data[0].facility == '1')
+                            $('#ufacility').html('Broadland');
+                        else
+                            $('#ufacility').html('Cascade');
+
+                        facility = data[0].facility;
+
+                        if (data[0].grade == '2')
+                            $('.hclass').hide();
+
+                    }
+                }
+            })
+        }
+
+        function onmyway(){
+            if (!onmywayDown){
+                onmywayDown = true;
+                $('#btnOnMyWay').attr({'style': 'background-image : url("/images/myway1.png")'})
+            }else{
+                onmywayDown = false;
+                $('#btnOnMyWay').attr({'style': 'background-image  : url("/images/myway.png")'})
+            }
+
+//        socket.emit('notify', { msg: nm});
+            location.href="/map";
+            return true;
+        }
+
+        $('.glyphicon-user').click(function () {
+            location.href = '/select-profile';
+        })
+
+        $("#addChildBtn").click(function(){
+            var add_child_dialog = $('#add-child').dialog({
+                resizable: false, height: "auto", width : 280, modal: true,
+                buttons: {
+                    "Cancel": function() {
+                        $( this ).dialog( "close" );
+                    },
+                    "Add": function() {
+                        if($('#cname1').val() == '' || !checkName($('#cname1').val())){
+                            showAlert('Input First Name correctly.')
+                            return false;
+                        }
+
+                        if($('#cname2').val() == '' || !checkName($('#cname2').val())){
+                            showAlert('Input Last Name correctly.')
+                            return false;
+                        }
+
+                        var cname =  $('#cname1').val() + ' ' + $('#cname2').val();
+                        $.ajax({
+                            url:'/addChild', data : {cname : cname},
+                            success : function(data){
+                                if(data.result == 'success')
+                                    showSuccess('You added <b>' + cname + '</b> successfully!');
+                                else if(data.result == 'exist')
+                                    showAlert(cname + ' was already registered.')
+                                add_child_dialog.dialog( "close" );
+                            }
+                        })
+                    }
+                }
+            })
+        })
+
+        $("#addFacultyBtn").click(function(){
+            var add_faculty_dialog = $('#add-faculty').dialog({
+                resizable: false, height: "auto", width : 280, modal: true,
+                buttons:{
+                    "Cancel" : function(){ $(this).dialog('close'); },
+                    "Add" : function(){
+                        if($('#fname1').val() == '' || !checkName($('#fname1').val())){
+                            showAlert('Input First Name correctly.')
+                            return false;
+                        }
+
+                        if($('#fname2').val() == '' || !checkName($('#fname2').val())){
+                            showAlert('Input Last Name correctly.')
+                            return false;
+                        }
+
+                        var fname =  $('#fname1').val() + ' ' + $('#fname2').val();
+                        $.ajax({
+                            url:'/addFaculty', data : {fname : fname, facility: facility},
+                            success : function(data){
+                                if(data.result == 'success')
+                                    showSuccess('You added <b>' + fname + '</b> successfully!');
+                                else if(data.result == 'exist')
+                                    showAlert('You have reached your faculty limit of 1.<br>Please delete a faculty member and try again.')
+                                add_faculty_dialog.dialog( "close" );
+                            }
+                        })
+                    }
+                }
+            })
+        })
+
+        $("#delChildBtn").click(function(){
+            var del_child_dialog = $('#delete-child').dialog({
+                resizable: false, height: "auto", width : 280, modal: true,
+                buttons: {
+                    "Cancel": function() {
+                        $( this ).dialog( "close" );
+                    },
+                    "Delete": function() {
+                        if($('#clist').val() == '0'){
+                            showAlert('Select Child');
+                            return false;
+                        }
+                        var cid =  $('#clist').val();
+                        var cname = $('#clist option:selected'). text();
+                        $.ajax({
+                            url:'/deleteChild', data : {cid : cid},
+                            success : function(data){
+                                if(data.result == 'success')
+                                    showSuccess('You delete <b>' + cname + '</b> successfully!');
+                                else if(data.result == 'exist')
+                                    showAlert(cname + ' was note deleted.')
+                                del_child_dialog.dialog( "close" );
+                            }
+                        })
+                    }
+                }
+            })
+        })
+
+        $("#delFacultyBtn").click(function(){
+            var del_faculty_dialog = $('#delete-faculty').dialog({
+                resizable: false, height: "auto", width : 280, modal: true,
+                buttons: {
+                    "Cancel": function() {
+                        $( this ).dialog( "close" );
+                    },
+                    "Delete": function() {
+                        $.ajax({
+                            url:'/deleteFaculty',
+                            success : function(data){
+                                if(data.result == 'success')
+                                    showSuccess('You deleted a faculty successfully!');
+                                else if(data.result == 'fail')
+                                    showAlert('Faculty was nor deleted. Try it later.')
+                                del_faculty_dialog.dialog( "close" );
+                            }
+                        })
+                    }
+                }
+            })
+        })
+
+        $("#signout").click(function(){
+            localStorage.removeItem('uid');
+            localStorage.removeItem('grade');
+            localStorage.removeItem('cid');
+            location.href = '/';
+        })
+
+        function loadChildList(){
+            $.ajax({
+                url:'/getChildList', datatype:'JSON',
+                success:function(rows){
+                    $('#clist').empty();
+                    $('#clist').append('<option value="0" selected>Select Child</option>');
+                    for(var i in rows){
+                        $('#clist').append('<option value="'+ rows[i].cid +'">' + rows[i].child_name + '</option>');
+                    }
+                }
+            })
+        }
+
+        $(document).ready(function(){
+            loadSettingMenu();
+            loadChildList();
+        })
+
+    </script>
+
+</body>
+</html>

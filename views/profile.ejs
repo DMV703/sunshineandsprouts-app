@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Sunshine & Sprout Daycare</title>
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/jquery-ui.min.css">
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+	<script src="/javascripts/jquery-ui.min.js"></script>
+	<script src="/javascripts/common.js"></script>
+</head>
+
+<body>
+
+	<div id="dialog-confirm" title="Information" style="display:none;">
+		<p>
+			<span class="glyphicon glyphicon-exclamation-sign" style="font-size:20px; color:#3e8acc;float:left; margin-right:12px;"></span>
+			<span id="msg-cont"></span>
+		</p>
+	</div>
+
+	<!-- Form to add Photo  -->
+	<div id="photo-dialog" title="Add Photo" style="display: none;">
+		<form>
+			<fieldset style="border:0px;">
+				<div>
+					<div style="width:260px;height:260px;">
+						<img id="photo">
+					</div>
+					<div >
+						<input id="photo-selector" name="photo-selector" type="file"  accept="image/*" capture="camera" style="minheight:20px;">
+					</div>
+				</div>
+				<!-- Allow form submission with keyboard without duplicating the dialog button -->
+				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+			</fieldset>
+		</form>
+	</div>
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-1 col-xs-2">
+                    <img id="btnBack" src="/images/backbtn_blue.svg" width="30">
+                </div>
+                <div class="col-sm-10 col-xs-8">
+                    <h3 class="text-center">Child Profile</h3>
+				</div>
+                <div class="col-sm-1 col-xs-2 col-xs-offset-0">
+                    <img id="btnEdit" src="/images/pencil.svg" width="30">
+                </div>
+            </div>
+        </div>
+    </header>
+	
+    <div class="container">
+	<!-- Photo Part -->
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <h2 id="childName" class="text-center"></h2>
+			</div>
+        </div>
+        <div class="row visible-xs-block visible-sm-block">
+            <div class="col-sm-2 col-sm-offset-5 col-xs-4 col-xs-offset-4">
+			<img id="childPhoto" class="img-responsive visible-xs-block visible-sm-block" src="" width="100" height="100">
+			</div>
+        </div>
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-sm-2 col-sm-offset-5 col-xs-2 col-xs-offset-5">
+			<img id="btnCamera"  src="/images/camera.svg" width="30">
+			</div>
+        </div>
+		
+	<!-- Collapses -->
+		<!-- Basic Information -->
+        <div style="background-color:#D8E8F5;">
+			<div id="collapseBtn1" class="row btn visible-xs-block visible-sm-block"  data-toggle="collapse" data-target="#collapse-1">
+				<div class="col-sm-10 col-xs-10">
+				<span>Basic Information</span>
+				</div>
+				<div class="col-sm-2 col-xs-2">
+				<i id="icon1" class="glyphicon glyphicon-triangle-right"></i>
+				</div>
+			</div>
+            <div class="collapse" id="collapse-1">
+				<p> First Name: </p>
+				<input type="text" id="inpName1" value="">
+				<p> Last Name: </p>
+				<input type="text" id="inpName2" value="">
+                <p>Nickname(Optional): </p>
+                <input type="text" id="inpNickname" value="">
+                <p>Sex(Female/Male): </p>
+                <input type="text" id="inpSex" value="">
+                <p>Date of Birth:</p>
+                <input type="text" id="inpDOB" value="">
+                <p>Street Address:</p>
+                <input type="text" id="inpAddress" value="">
+                <p>City:</p>
+                <input type="text" id="inpCity" value="">
+                <p>State:</p>
+                <input type="text" id="inpState" value="">
+                <p>Zip Code: </p>
+                <input type="text" id="inpZipCode" value="">
+                <p>First Day of Attendance:</p>
+                <input type="text" id="inpFirstAttend" value="">
+                <p>Last Day of Attendance(Optional):</p>
+                <input type="text" id="inpLastAttend" value="">
+                <p>Tuition(weekly) </p>
+                <input type="text" id="inpTuition" value="">
+                <p>Weight(Optional) </p>
+                <input type="text" id="inpWeight" value="">
+                <p>Height(Optional) </p>
+                <input type="text" id="inpHeight" value="">
+			</div>
+		</div>
+		
+		<!-- Emergency Information -->
+		<div style="background-color:#D8E8F5;">
+			<div id="collapseBtn2" class="row btn visible-xs-block visible-sm-block"  data-toggle="collapse" data-target="#collapse-2">
+				<div class="col-sm-10 col-xs-10">
+				<span>Emergency Information</span>
+				</div>
+				<div class="col-sm-2 col-xs-2">
+				<i id="icon2" class="glyphicon glyphicon-triangle-right"></i>
+				</div>
+			</div>
+			<div class="collapse" id="collapse-2">
+				<!-- Allergies and intolerance to food, amedications, or other substances -->
+				<section>
+					<div class="row">
+						<div class="col-sm-10 col-xs-10" style="padding-left: 0px;">
+							<p>Allergies and intolerance to food, amedications, or other substances:</p>
+						</div>
+						<div class="prsign col-sm-1 col-xs-1">
+							<i id="AllergyAdd" class="glyphicon glyphicon-plus-sign"></i>
+						</div>
+						<div class="prsign col-sm-1 col-xs-1">
+							<i id="AllergyDel" class="glyphicon glyphicon-remove-sign"></i>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-xs-12">
+							<ul id="Allergy">
+							</ul>
+						</div>
+					</div>
+				</section>
+				<!-- Actions to take in emergency situations -->
+				<section>
+					<div class="row">
+						<div class="col-sm-10 col-xs-10" style="padding-left: 0px;">
+							<p>Actions to take in emergency situations:</p>
+						</div>
+						<div class="prsign col-sm-1 col-xs-1">
+							<i id="EmergActAdd" class="glyphicon glyphicon-plus-sign"></i>
+						</div>
+						<div class="prsign col-sm-1 col-xs-1">
+							<i id="EmergActDel" class="glyphicon glyphicon-remove-sign"></i>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-xs-12">
+							<ul id="EmergAct">
+							</ul>
+						</div>
+					</div>
+				</section>
+				<!-- Physical problems/Diseases -->
+				<section> 
+					<div class="row">
+						<div class="col-sm-10 col-xs-10" style="padding-left: 0px;">
+							<p>Physical problems/Diseases:</p>
+						</div>
+						<div class="prsign col-sm-1 col-xs-1">
+							<i id="PhysProbAdd" class="glyphicon glyphicon-plus-sign"></i>
+						</div>
+						<div class="prsign col-sm-1 col-xs-1">
+							<i id="PhysProbDel" class="glyphicon glyphicon-remove-sign"></i>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-xs-12">
+							<ul id="PhysProb">
+							</ul>
+						</div>
+					</div>
+				</section>
+				<!-- Special Accomodations needed -->
+				<section>
+					<div class="row">
+						<div class="col-sm-10 col-xs-10" style="padding-left: 0px;">
+							<p>Special Accomodations needed:</p>
+						</div>
+						<div class="prsign col-sm-1 col-xs-1">
+							<i id="SpecAccomAdd" class="glyphicon glyphicon-plus-sign"></i>
+						</div>
+						<div class="prsign col-sm-1 col-xs-1">
+							<i id="SpecAccomDel" class="glyphicon glyphicon-remove-sign"></i>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-xs-12">
+							<ul id="SpecAccom">
+							</ul>
+						</div>
+					</div>
+				</section>
+				<!-- Special Instructions to Provider -->
+				<section>
+					<div class="row">
+						<div class="col-sm-10 col-xs-10" style="padding-left: 0px;">
+							<p>Special Instructions to Provider:</p>
+						</div>
+						<div class="prsign col-sm-1 col-xs-1">
+							<i id="SpecInsProvAdd" class="glyphicon glyphicon-plus-sign"></i>
+						</div>
+						<div class="prsign col-sm-1 col-xs-1">
+							<i id="SpecInsProvDel" class="glyphicon glyphicon-remove-sign"></i>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-xs-12">
+							<ul id="SpecInsProv">
+							</ul>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<!-- Father Information -->
+		<div style="background-color:#D8E8F5;">
+			<div id="collapseBtn3" class="row btn visible-xs-block visible-sm-block" data-toggle="collapse" data-target="#collapse-3">
+				<div class="col-sm-10 col-xs-10">
+				<span>Father Information</span>
+				</div>
+				<div class="col-sm-2 col-xs-2">
+				<i id="icon3" class="glyphicon glyphicon-triangle-right"></i>
+				</div>
+			</div>
+			<div class="collapse" id="collapse-3">
+				<p>First Name: </p>
+				<input type="text" id="inpDadName1" value="">
+				<p>Last Name: </p>
+				<input type="text" id="inpDadName2" value="">
+				<p>Phone Number: </p>
+				<input type="text" id="inpDadPhone" value="" inputmode="tel">
+				<p>Street Address:</p>
+				<input type="text" id="inpDadAddress" value="">
+				<p>City:</p>
+				<input type="text" id="inpDadCity" value="">
+				<p>State:</p>
+				<input type="text" id="inpDadState" value="">
+				<p>Zip Code: </p>
+				<input type="text" id="inpDadZipCode" value="">
+				<p>Employer(Optional): </p>
+				<input type="text" id="inpDadWork" value="">
+				<p>Employer Phone Number(Optional):</p>
+				<input type="text" id="inpDadWorkPhone" value="">
+				<p>Employer Street Address(Optional):</p>
+				<input type="text" id="inpDadWorkAddress" value="">
+				<p>Employer City(Optional):</p>
+				<input type="text" id="inpDadWorkCity" value="">
+				<p>Employer State(Optional):</p>
+				<input type="text" id="inpDadWorkState" value="">
+				<p>Employer Zip Code(Optional):</p>
+				<input type="text" id="inpDadWorkZipCode" value="">
+			</div>
+		</div>
+
+		<!-- Mother Information -->
+		<div style="background-color:#D8E8F5;">
+			<div id="collapseBtn4" class="row btn visible-xs-block visible-sm-block"  data-toggle="collapse" data-target="#collapse-4">
+				<div class="col-sm-10 col-xs-10">
+				<span>Mother Information</span>
+				</div>
+				<div class="col-sm-2 col-xs-2">
+				<i id="icon4" class="glyphicon glyphicon-triangle-right"></i>
+				</div>
+			</div>
+			<div class="collapse" id="collapse-4">
+				<p>First Name: </p>
+				<input type="text" id="inpMomName1" value="">
+				<p>Last Name: </p>
+				<input type="text" id="inpMomName2" value="">
+				<p>Phone Number: </p>
+				<input type="text" id="inpMomPhone" value="" inputmode="tel">
+				<p>Street Address:</p>
+				<input type="text" id="inpMomAddress" value="">
+				<p>City:</p>
+				<input type="text" id="inpMomCity" value="">
+				<p>State:</p>
+				<input type="text" id="inpMomState" value="">
+				<p>Zip Code: </p>
+				<input type="text" id="inpMomZipCode" value="">
+				<p>Employer(Optional): </p>
+				<input type="text" id="inpMomWork" value="">
+				<p>Employer Phone Number(Optional):</p>
+				<input type="text" id="inpMomWorkPhone" value="">
+				<p>Employer Street Address(Optional):</p>
+				<input type="text" id="inpMomWorkAddress" value="">
+				<p>Employer City(Optional):</p>
+				<input type="text" id="inpMomWorkCity" value="">
+				<p>Employer State(Optional):</p>
+				<input type="text" id="inpMomWorkState" value="">
+				<p>Employer Zip Code(Optional):</p>
+				<input type="text" id="inpMomWorkZipCode" value="">
+			</div>
+		</div>
+
+		<!-- Child's Physiction -->
+		<div style="background-color:#D8E8F5;">
+			<div id="collapseBtn5" class="row btn visible-xs-block visible-sm-block"  data-toggle="collapse" data-target="#collapse-5">
+				<div class="col-sm-10 col-xs-10">
+				<span>Child's Physician</span>
+				</div>
+				<div class="col-sm-2 col-xs-2">
+				<i id="icon5" class="glyphicon glyphicon-triangle-right"></i>
+				</div>
+			</div>
+			<div class="collapse" id="collapse-5">
+				<p>Full Name(Optional): </p>
+				<input type="text" id="inpDoctorName" value="">
+				<p>Phone Number(Optional): </p>
+				<input type="text" id="inpDoctorPhone" value="" inputmode="tel">
+				<p>Street Address(Optional):</p>
+				<input type="text" id="inpDoctorAddress" value="">
+				<p>City(Optional):</p>
+				<input type="text" id="inpDoctorCity" value="">
+				<p>State(Optional):</p>
+				<input type="text" id="inpDoctorState" value="">
+				<p>Zip Code(Optional): </p>
+				<input type="text" id="inpDoctorZipCode" value="">
+				<p>Child's Medical Insurance(Optional): </p>
+				<input type="text" id="inpChildMedical" value="">
+				<p>Insurance Policy Number(Optional):</p>
+				<input type="text" id="inpChildInsureNumber" value="">
+			</div>
+		</div>
+
+		<!-- Emergency Contact 1 -->
+		<div style="background-color:#D8E8F5;">
+			<div id="collapseBtn6" class="row btn visible-xs-block visible-sm-block"  data-toggle="collapse" data-target="#collapse-6">
+				<div class="col-sm-10 col-xs-10">
+				<span>Emergency Contact 1</span>
+				</div>
+				<div class="col-sm-2 col-xs-2">
+				<i id="icon6" class="glyphicon glyphicon-triangle-right"></i>
+				</div>
+			</div>
+			<div class="collapse" id="collapse-6">
+				<p>Full Name: </p>
+				<input type="text" id="inpEmContName1" value="">
+				<p>Phone Number: </p>
+				<input type="text" id="inpEmContPhone1" value="" inputmode="tel">
+				<p>Street Address(Optional):</p>
+				<input type="text" id="inpEmContAddress1" value="">
+				<p>City(Optional):</p>
+				<input type="text" id="inpEmContCity1" value="">
+				<p>State(Optional):</p>
+				<input type="text" id="inpEmContState1" value="">
+				<p>Zip Code(Optional): </p>
+				<input type="text" id="inpEmContZipCode1" value="">
+				<p>Relation to Child(Optional): </p>
+				<input type="text" id="inpEmContRelation1" value="">
+			</div>
+		</div>
+
+		<!-- Emergency Contact 2 -->
+		<div style="background-color:#D8E8F5;">
+			<div id="collapseBtn7" class="row btn visible-xs-block visible-sm-block"  data-toggle="collapse" data-target="#collapse-7">
+				<div class="col-sm-10 col-xs-10"> <span>Emergency Contact 2</span></div>
+				<div class="col-sm-2 col-xs-2"> 
+					<i id="icon7" class="glyphicon glyphicon-triangle-right"></i>	
+				</div>
+			</div>
+			<div class="collapse" id="collapse-7">
+				<p>Full Name(Optional): </p>
+				<input type="text" id="inpEmContName2" value="">
+				<p>Phone Number(Optional): </p>
+				<input type="text" id="inpEmContPhone2" value="" inputmode="tel">
+				<p>Street Address(Optional):</p>
+				<input type="text" id="inpEmContAddress2" value="">
+				<p>City(Optional):</p>
+				<input type="text" id="inpEmContCity2" value="">
+				<p>State(Optional):</p>
+				<input type="text" id="inpEmContState2" value="">
+				<p>Zip Code(Optional): </p>
+				<input type="text" id="inpEmContZipCode2" value="">
+				<p>Relation to Child(Optional): </p>
+				<input type="text" id="inpEmContRelation2" value="">
+			</div>
+		</div>
+    </div>
+
+	<script>
+        var cid = '<%=cid%>';
+        var editable = false;
+        //var cid = 4;
+        // photo
+        var photo_dialog = $( "#photo-dialog" ).dialog({
+            autoOpen: false,
+            width: 320,
+            modal: true,
+            buttons: {
+                Cancel: function() {
+                    photo_dialog.dialog( "close" );
+                },
+                "Save & Close": function(){ savePhoto();}
+            },
+            close: function() {
+                photo_form[0].reset();
+            }
+        });
+
+        var photo_form = photo_dialog.find( "form" ).on( "submit", function( event ) {
+            event.preventDefault();
+        });
+
+        function showMessage(msg) {
+            var msgdlg = $( "#dialog-confirm" ).dialog({
+                resizable: false,
+                height: "auto",
+                width : 280,
+                modal: true,
+                buttons: {
+                    "Close": function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+            $("#msg-cont").text(msg);
+            msgdlg.dialog("open");
+        }
+
+        // save profile data
+        function saveProfile(){
+            // save child data
+            var gender = $('#inpSex').val().toLowerCase();
+            if($('#inpName1').val() == ''){ showMessage("Input Child's First Name."); return false;}
+            if($('#inpName2').val() == ''){ showMessage("Input Child's Last Name."); return false;}
+            if(gender == ''){
+                showMessage("Input Child's Gender."); return false;
+            }else if(gender=='female') gender = 'f';
+            else gender = 'm';
+
+            if($('#inpDOB').val() == ''){ showMessage("Input Child's D.O.B."); return false;}
+            if($('#inpAddress').val() == ''){ showMessage("Input Child's Street Adress."); return false;}
+            if($('#inpCity').val() == ''){ showMessage("Input Child's City."); return false;}
+            if($('#inpState').val() == ''){ showMessage("Input Child's State."); return false;}
+            if($('#inpZipCode').val() == ''){ showMessage("Input Child's Zipcode."); return false;}
+            if($('#inpFirstAttend').val() == ''){ showMessage("Input Child's First Day of Attendance."); return false;}
+            if($('#inpTuition').val() == ''){ showMessage("Input Child's Tuition(weekly)."); return false;}
+            $.ajax({
+                url :'/update-child-data', type:'post', datatype:'JSON',
+                data:{cid: cid,
+                    name:($('#inpName1').val() + ' ' + $('#inpName2').val()),
+                    nickname:$('#inpNickname').val(),
+                    gender:gender,
+                    birthday:$('#inpDOB').val(),
+                    address:$('#inpAddress').val(),
+                    city:$('#inpCity').val(),
+                    state:$('#inpState').val(),
+                    zipcode:$('#inpZipCode').val(),
+                    firstattend:$('#inpFirstAttend').val(),
+                    lastattend:$('#inpLastAttend').val(),
+                    tuition:$('#inpTuition').val(),
+                    weight:$('#inpWeight').val(),
+                    height:$('#inpHeight').val(),
+                    imgpath:$('#childPhoto').attr("src")
+                },
+                success: function(data){},
+                error: function(xhr, status, error){ return false;}
+            })
+
+            // save child Allergy
+            var action = ['','#Allergy','#EmergAct','#PhysProb','#SpecAccom','#SpecInsProv'];
+
+            $.ajax({
+                url:'/delete-emergency', type:'post',
+                data :{cid: cid}, async:false,
+                success: function(data){},
+                error: function(xhr, status, error){ return false;}
+            })
+
+            for(var j=1; j <= 5; j++){
+                var items = $(action[j]+' input');
+                var mms = '';
+                $.each(items, function(i, item){
+                    mms = item.value;
+                    $.ajax({
+                        url:'/update-emergency', type:'post',
+                        data :{cid: cid, emerg : mms, kind: ''+j}, async:false,
+                        success: function(data){},
+                        error: function(xhr, status, error){ return false;}
+                    })
+                });
+            }
+
+            // save father data
+            if($('#inpDadName1').val() == '' || !checkName($('#inpDadName1').val())){
+                showMessage("Input Father's First Name.");
+                return false;
+            }
+            if($('#inpDadName2').val() == '' || !checkName($('#inpDadName2').val())){
+                showMessage("Input Father's Last Name.");
+                return false;
+            }
+            if($('#inpDadAddress').val() == ''){ showMessage("Input Father's address."); return false;}
+            if($('#inpDadCity').val() == ''){ showMessage("Input Father's city."); return false;}
+            if($('#inpDadState').val() == ''){ showMessage("Input Father's state."); return false;}
+            if($('#inpDadZipCode').val() == '' || !checkZipCode($('#inpDadZipCode').val())){
+                showMessage("Input Father's zipcode.");
+                return false;
+            }
+            if($('#inpDadPhone').val() == '' || !checkPhoneNumber($('#inpDadPhone').val())){
+                showMessage("Input Father's phone.");
+                return false;
+            }
+
+            $.ajax({
+                url :'/update-parent-data', type:'post', datatype:'JSON', async:false,
+                data:{cid: cid, gender:'m',
+                    name:$('#inpDadName1').val() + ' ' + $('#inpDadName2').val(),
+                    address:$('#inpDadAddress').val(),
+                    city:$('#inpDadCity').val(),
+                    state:$('#inpDadState').val(),
+                    zipcode:$('#inpDadZipCode').val(),
+                    phone:$('#inpDadPhone').val(),
+                    employer:$('#inpDadWork').val(),
+                    workphone:$('#inpDadWorkPhone').val(),
+                    workaddress:$('#inpDadWorkAddress').val(),
+                    workcity:$('#inpDadWorkCity').val(),
+                    workstate:$('#inpDadWorkState').val(),
+                    workzip:$('#inpDadWorkZipCode').val()
+                },
+                success: function(data){},
+                error: function(xhr, status, error){ return false;}
+            })
+
+            if($('#inpMomName1').val() == '' || !checkName($('#inpMomName1').val())){
+                showMessage("Input Mother's First Name.");
+                return false;
+            }
+            if($('#inpMomName2').val() == '' || !checkName($('#inpMomName2').val())){
+                showMessage("Input Mother's Last Name.");
+                return false;
+            }
+            if($('#inpMomAddress').val() == ''){
+                showMessage("Input Mother's address.");
+                return false;
+            }
+            if($('#inpMomCity').val() == ''){
+                showMessage("Input Mother's city.");
+                return false;
+            }
+            if($('#inpMomState').val() == ''){
+                showMessage("Input Mother's state.");
+                return false;
+            }
+            if($('#inpMomZipCode').val() == '' || !checkZipCode($('#inpMomZipCode').val())){
+                showMessage("Input Mother's zipcode.");
+                return false;
+            }
+            if($('#inpMomPhone').val() == '' || !checkPhoneNumber($('#inpMomPhone').val())){
+                showMessage("Input Mother's phone.");
+                return false;
+            }
+
+            // save mother data
+            $.ajax({
+                url :'/update-parent-data', type:'post', datatype:'JSON', async:false,
+                data:{cid: cid, gender:'f',
+                    name:$('#inpMomName1').val() + ' ' + $('#inpMomName2').val(),
+                    address:$('#inpMomAddress').val(),
+                    city:$('#inpMomCity').val(),
+                    state:$('#inpMomState').val(),
+                    zipcode:$('#inpMomZipCode').val(),
+                    phone:$('#inpMomPhone').val(),
+                    employer:$('#inpMomWork').val(),
+                    workphone:$('#inpMomWorkPhone').val(),
+                    workaddress:$('#inpMomWorkAddress').val(),
+                    workcity:$('#inpMomWorkCity').val(),
+                    workstate:$('#inpMomWorkState').val(),
+                    workzip:$('#inpMomWorkZipCode').val()
+                },
+                success: function(data){},
+                error: function(xhr, status, error){ return false;}
+            })
+
+            // save Doctor's data
+            $.ajax({
+                url :'/save-doctor-data', type:'post', datatype:'JSON',
+                data:{cid: cid,
+                    name:$('#inpDoctorName').val(),
+                    phone:$('#inpDoctorPhone').val(),
+                    address:$('#inpDoctorAddress').val(),
+                    city:$('#inpDoctorCity').val(),
+                    state:$('#inpDoctorState').val(),
+                    zipcode:$('#inpDoctorZipCode').val(),
+                    medical:$('#inpChildMedical').val(),
+                    insure_number:$('#inpChildInsureNumber').val()
+                },
+                success: function(data){},//console.log(data.result)},
+                error: function(xhr, status, error){ return false;}
+            })
+
+            // save Emergency Contact1's data
+            if($('#inpEmContName1').val() == ''){ showMessage("Input the first Contact people's Name in Emergency."); return false;}
+            if($('#inpEmContPhone1').val() == ''){ showMessage("Input the first Contact people's phonenumber in Emergency."); return false;}
+            $.ajax({
+                url :'/save-emcontact-data', type:'post', datatype:'JSON', //async: false,
+                data:{cid: cid,
+                    kind : '1',
+                    name:$('#inpEmContName1').val(),
+                    phone:$('#inpEmContPhone1').val(),
+                    address:$('#inpEmContAddress1').val(),
+                    city:$('#inpEmContCity1').val(),
+                    state:$('#inpEmContState1').val(),
+                    zipcode:$('#inpEmContZipCode1').val(),
+                    relation:$('#inpEmContRelation1').val()
+                },
+                success: function(data){},//console.log(data.result);},
+                error: function(xhr, status, error){ return false;}
+            })
+
+            // save Emergency Contact2's data
+            if($('#inpEmContName2').val() == ''){ showMessage("Input the Second Contact people's Name in Emergency."); return false;}
+            if($('#inpEmContPhone2').val() == ''){ showMessage("Input the Second Contact people's phone number in Emergency."); return false;}
+            $.ajax({
+                url :'/save-emcontact-data', type:'post', datatype:'JSON',
+                data:{cid: cid,
+                    kind : '2',
+                    name:$('#inpEmContName2').val(),
+                    phone:$('#inpEmContPhone2').val(),
+                    address:$('#inpEmContAddress2').val(),
+                    city:$('#inpEmContCity2').val(),
+                    state:$('#inpEmContState2').val(),
+                    zipcode:$('#inpEmContZipCode2').val(),
+                    relation:$('#inpEmContRelation2').val()
+                },
+                success: function(data){}, //console.log(data.result);},
+                error: function(xhr, status, error){ return false;}
+            })
+        }
+
+        function getPDT_Date(dateStr){
+            var date = new Date(dateStr);
+            dateStr = date.toString() // "Wed Jun 29 2011 09:52:48 GMT-0700 (PDT)"
+            return dateStr.substr(0,15);
+        }
+
+        // load profile data
+        function loadProfile(){
+            // load child data
+            $.ajax({
+                url :'/get-child-data', type:'post', datatype:'JSON',
+                data:{cid: cid},
+                success: function(data){
+                    if (data.length == 0) return;
+                    var name = data[0].child_name,
+                        nickname = data[0].nickname ,
+                        gender = data[0].gender,
+                        birthday = data[0].birthday,
+                        address = data[0].address,
+                        city = data[0].city,
+                        state = data[0].state,
+                        zipcode = data[0].zipcode,
+                        firstattend = data[0].firstattend,
+                        lastattend = data[0].lastattend,
+                        tuition = data[0].tuition,
+                        weight = data[0].weight,
+                        height = data[0].height,
+                        imgpath = data[0].imgsrc;
+
+                    if(name == undefined) {
+                        $('#inpName1').val('');
+                        $('#inpName2').val('');
+                    } else {
+                        var ss = name.split(' ');
+                        $('#inpName1').val(ss[0]);
+                        $('#inpName2').val(ss[1]);
+                    }
+                    if(nickname == undefined) {
+                        $('#inpNickname').val('');
+                        $('#childName').text(name);
+                    }else{
+                        $('#inpNickname').val(nickname);
+                        var ss = name.split(' ');
+                        if(ss.length > 1)
+                            $('#childName').text(nickname + ' ' + ss[1]);
+                    }
+                    if(gender=='f') $('#inpSex').val('Female'); else $('#inpSex').val('Male');
+                    if(birthday==undefined) $('#inpDOB').val('');
+                    else { $('#inpDOB').val(getPDT_Date(birthday)); }
+                    if(address==undefined) $('#inpAddress').val(''); else $('#inpAddress').val(address);
+                    if(city==undefined) $('#inpCity').val(''); else $('#inpCity').val(city);
+                    if(state==undefined) $('#inpState').val(''); else $('#inpState').val(state);
+                    if(zipcode==undefined) $('#inpZipCode').val(''); else $('#inpZipCode').val(zipcode);
+                    if(firstattend==undefined) $('#inpFirstAttend').val(''); else $('#inpFirstAttend').val(getPDT_Date(firstattend));
+                    if(lastattend==undefined) $('#inpLastAttend').val(''); else $('#inpLastAttend').val(lastattend);
+                    if(tuition==undefined) $('#inpTuition').val(''); else $('#inpTuition').val(tuition);
+                    if(weight==undefined) $('#inpWeight').val(''); else $('#inpWeight').val(weight);
+                    if(height==undefined) $('#inpHeight').val(''); else $('#inpHeight').val(height);
+                    if(imgpath==undefined) $('#childPhoto').attr("src",'/images/default-profile.svg'); else $('#childPhoto').attr("src",imgpath);
+                },
+                error: function(xhr, status, error){ return false;}
+            })
+
+            // get child Allergy
+            var action = ['','#Allergy','#EmergAct','#PhysProb','#SpecAccom','#SpecInsProv'];
+
+            for(var j=1; j <= 5; j++){
+                $.ajax({
+                    url:'/get-emergency', type:'post',
+                    data :{cid: cid, kind: ''+j}, async:false,
+                    success: function(data){
+
+                        for(var i=0; i<data.length; i++){
+                            var shtml = '<li><input type="text" value="'+ data[i].emer_item +'"> </li>';
+                            $(action[j]).append(shtml);
+                        }
+                    },
+                    error: function(xhr, status, error){ return false;}
+                })
+            }
+
+            // get father data
+            $.ajax({
+                url :'/get-parent-data', type:'post', datatype:'JSON', async:false,
+                data:{cid: cid, gender:'f'},
+                success: function(data){
+                    if(data.length > 0){
+                        var name = data[0].user_name,
+                            address = data[0].address,
+                            city = data[0].city,
+                            state = data[0].state,
+                            zipcode = data[0].zipcode,
+                            phone = data[0].phonenumber,
+                            employer = data[0].employer,
+                            workphone = data[0].workphone,
+                            workaddress = data[0].workaddress,
+                            workcity = data[0].workcity,
+                            workstate = data[0].workstate,
+                            workzip = data[0].workzipcode;
+
+                        if(name == undefined) {
+                            $('#inpDadName1').val('');
+                            $('#inpDadName2').val('');
+                        } else {
+                            var nn = name.split(' ');
+                            $('#inpDadName1').val(nn[0]);
+                            if(nn.length > 1)
+                                $('#inpDadName2').val(nn[1]);
+                            else
+                                $('#inpDadName2').val('');
+                        }
+                        if(address == undefined) $('#inpDadAddress').val(''); else $('#inpDadAddress').val(address);
+                        if(city == undefined) $('#inpDadCity').val(''); else $('#inpDadCity').val(city);
+                        if(state == undefined) $('#inpDadState').val(''); else $('#inpDadState').val(state);
+                        if(zipcode == undefined) $('#inpDadZipCode').val(''); else $('#inpDadZipCode').val(zipcode);
+                        if(phone == undefined) $('#inpDadPhone').val(''); else $('#inpDadPhone').val(phone);
+                        if(employer == undefined) $('#inpDadWork').val(''); else $('#inpDadWork').val(employer);
+                        if(workphone == undefined) $('#inpDadWorkPhone').val(''); else $('#inpDadWorkPhone').val(workphone);
+                        if(workaddress == undefined) $('#inpDadWorkAddress').val(''); else $('#inpDadWorkAddress').val(workaddress);
+                        if(workcity == undefined) $('#inpDadWorkCity').val(''); else $('#inpDadWorkCity').val(workcity);
+                        if(workstate == undefined) $('#inpDadWorkState').val(''); else $('#inpDadWorkState').val(workstate);
+                        if(workzip == undefined) $('#inpDadWorkZipCode').val(''); else $('#inpDadWorkZipCode').val(workzip);
+                    }
+                },
+                error: function(xhr, status, error){ return false;}
+            })
+
+            // get mother data
+            $.ajax({
+                url :'/get-parent-data', type:'post', datatype:'JSON', async:false,
+                data:{cid: cid, gender:'m'},
+                success: function(data){
+                    if(data.length > 0){
+                        var name = data[0].user_name,
+                            address = data[0].address,
+                            city = data[0].city,
+                            state = data[0].state,
+                            zipcode = data[0].zipcode,
+                            phone = data[0].phonenumber,
+                            employer = data[0].employer,
+                            workphone = data[0].workphone,
+                            workaddress = data[0].workaddress,
+                            workcity = data[0].workcity,
+                            workstate = data[0].workstate,
+                            workzip = data[0].workzipcode;
+
+                        if(name == undefined) {
+                            $('#inpMomName1').val('');
+                            $('#inpMomName2').val('');
+                        }else {
+                            var nn = name.split(' ');
+
+                            $('#inpMomName1').val(nn[0]);
+                            if(nn.length > 1)
+                                $('#inpMomName2').val(nn[1]);
+                            else
+                                $('#inpMomName2').val('');
+                        }
+
+                        if(address == undefined)
+                            $('#inpMomAddress').val('');
+                        else
+                            $('#inpMomAddress').val(address);
+
+                        if(city == undefined)
+                            $('#inpMomCity').val('');
+                        else
+                            $('#inpMomCity').val(city);
+
+                        if(state == undefined)
+                            $('#inpMomState').val('');
+                        else
+                            $('#inpMomState').val(state);
+
+                        if(zipcode == undefined)
+                            $('#inpMomZipCode').val('');
+                        else
+                            $('#inpMomZipCode').val(zipcode);
+
+                        if(phone == undefined)
+                            $('#inpMomPhone').val('');
+                        else
+                            $('#inpMomPhone').val(phone);
+
+                        if(employer == undefined)
+                            $('#inpMomWork').val('');
+                        else
+                            $('#inpMomWork').val(employer);
+
+                        if(workphone == undefined)
+                            $('#inpMomWorkPhone').val('');
+                        else
+                            $('#inpMomWorkPhone').val(workphone);
+
+                        if(workaddress == undefined)
+                            $('#inpMomWorkAddress').val('');
+                        else
+                            $('#inpMomWorkAddress').val(workaddress);
+
+                        if(workcity == undefined)
+                            $('#inpMomWorkCity').val('');
+                        else
+                            $('#inpMomWorkCity').val(workcity);
+
+                        if(workstate == undefined)
+                            $('#inpMomWorkState').val('');
+                        else
+                            $('#inpMomWorkState').val(workstate);
+
+                        if(workzip == undefined)
+                            $('#inpMomWorkZipCode').val('');
+                        else
+                            $('#inpMomWorkZipCode').val(workzip);
+                    }
+                },
+                error: function(xhr, status, error){ return false;}
+            })
+
+            // get Doctor's data
+            $.ajax({
+                url :'/get-doctor-data', type:'post', datatype:'JSON',
+                data:{cid: cid},
+                success: function(data){
+                    var name = '', phone = '', address = '', city = '',state = '',
+                        zipcode = '', medical = '', insure_number = '';
+
+                    if(data.length > 0){
+                        name = data[0].name,
+                            phone = data[0].phone,
+                            address = data[0].address,
+                            city = data[0].city,
+                            state = data[0].state,
+                            zipcode = data[0].zipcode,
+                            medical = data[0].medical,
+                            insure_number = data[0].insure_number;
+                    }
+
+                    if(name == undefined) $("#inpDoctorName").val(''); else $("#inpDoctorName").val(name);
+                    if(phone == undefined) $("#inpDoctorPhone").val(''); else $("#inpDoctorPhone").val(phone);
+                    if(address == undefined) $("#inpDoctorAddress").val(''); else $("#inpDoctorAddress").val(address);
+                    if(city == undefined) $("#inpDoctorCity").val(''); else $("#inpDoctorCity").val(city);
+                    if(state == undefined) $("#inpDoctorState").val(''); else $("#inpDoctorState").val(state);
+                    if(zipcode == undefined) $("#inpDoctorZipCode").val(''); else $("#inpDoctorZipCode").val(zipcode);
+                    if(medical == undefined) $("#inpChildMedical").val(''); else $("#inpChildMedical").val(medical);
+                    if(insure_number == undefined) $("#inpChildInsureNumber").val(''); else $("#inpChildInsureNumber").val(insure_number);
+                },
+                error: function(xhr, status, error){ return false;}
+            })
+
+            // load Emergency Contact1's data
+            $.ajax({
+                url :'/get-emcontact-data', type:'post', datatype:'JSON', async: false,
+                data:{cid: cid,	kind : '1'},
+                success: function(data){
+                    var name = '', phone = '', address = '', city = '',
+                        state = '', zipcode = '', relation = '';
+
+                    if (data.length > 0) {
+                        name = data[0].name;
+                        phone = data[0].phone;
+                        address = data[0].address;
+                        city = data[0].city;
+                        state = data[0].state;
+                        zipcode = data[0].zipcode;
+                        relation = data[0].relation;
+                    }
+
+                    if(name == undefined) $("#inpEmContName1").val(""); else $("#inpEmContName1").val(name);
+                    if(phone == undefined) $("#inpEmContPhone1").val(""); else $("#inpEmContPhone1").val(phone);
+                    if(address == undefined) $("#inpEmContAddress1").val(""); else $("#inpEmContAddress1").val(address);
+                    if(city == undefined) $("#inpEmContCity1").val(""); else $("#inpEmContCity1").val(city);
+                    if(state == undefined) $("#inpEmContState1").val(""); else $("#inpEmContState1").val(state);
+                    if(zipcode == undefined) $("#inpEmContZipCode1").val(""); else $("#inpEmContZipCode1").val(zipcode);
+                    if(relation == undefined) $("#inpEmContRelation1").val(""); else $("#inpEmContRelation1").val(relation);
+                },
+                error: function(xhr, status, error){ return false;}
+            })
+
+            // load Emergency Contact2's data
+            $.ajax({
+                url :'/get-emcontact-data', type:'post', datatype:'JSON', //async: false,
+                data:{cid: cid,	kind : '2'},
+                success: function(data){
+                    var name = '', phone = '', address = '', city = '',
+                        state = '', zipcode = '', relation = '';
+
+                    if(data.length > 0) {
+                        name = data[0].name;
+                        phone = data[0].phone;
+                        address = data[0].address;
+                        city = data[0].city;
+                        state = data[0].state;
+                        zipcode = data[0].zipcode;
+                        relation = data[0].relation;
+                    }
+
+                    if(name == undefined) $("#inpEmContName2").val(""); else $("#inpEmContName2").val(name);
+                    if(phone == undefined) $("#inpEmContPhone2").val(""); else $("#inpEmContPhone2").val(phone);
+                    if(address == undefined) $("#inpEmContAddress2").val(""); else $("#inpEmContAddress2").val(address);
+                    if(city == undefined) $("#inpEmContCity2").val(""); else $("#inpEmContCity2").val(city);
+                    if(state == undefined) $("#inpEmContState2").val(""); else $("#inpEmContState2").val(state);
+                    if(zipcode == undefined) $("#inpEmContZipCode2").val(""); else $("#inpEmContZipCode2").val(zipcode);
+                    if(relation == undefined) $("#inpEmContRelation2").val(""); else $("#inpEmContRelation2").val(relation);
+                },
+                error: function(xhr, status, error){ return false;}
+            })
+
+        }
+
+        function ISOtimeformat(){
+            var ndate = new Date();
+            var tstr = ndate.getHours() + ":";
+            if(ndate.getHours() < 10) tstr = "0" + tstr;
+            if(ndate.getMinutes() < 10) tstr = tstr.concat("0", ndate.getMinutes());
+            else                        tstr = tstr.concat(ndate.getMinutes());
+
+            return tstr;
+        }
+
+        // upload photo
+        function savePhoto() {
+            if(cid == undefined){
+                showMessage('No selected cildren. Select child.');
+                return false;
+            }
+
+            // insert note in DB
+            var selector = $("#photo-selector");
+
+            if(selector[0].files && selector[0].files[0]){
+                var formData = new FormData();
+                var btime = ISOtimeformat();
+                var imgpath = selector[0].files[0];
+                formData.append("photo", imgpath);
+                formData.append("cid", cid);
+
+                $.ajax({
+                    url: '/uploadphoto', data: formData, processData: false,
+                    contentType: false, type: 'POST',
+                    success: function(data){
+                        console.log("photo upload success");
+                        imgpath = data.imgsrc;
+                        $('#childPhoto').attr("src", imgpath);;
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("photo upload Failure");
+                    }
+                });
+            }
+            photo_dialog.dialog( "close" );
+        }
+
+        $(document).ready(function(){
+            loadProfile();
+            $("input").attr("readonly",true);
+        });
+
+        $("#btnBack").click(function(){ window.history.back();})
+
+        $("#btnEdit").click(function(){
+            if($("input").attr("readonly")){
+                editable = true;
+                // To editable State
+                $("#btnEdit").attr("src","/images/savebtn.svg");
+                $("input").attr("readonly",false);
+            }else{
+                editable = false;
+                // To DisEditable State
+                $("#btnEdit").attr("src","/images/pencil.svg");
+                $("input").attr("readonly",true);
+                // save data
+                saveProfile();
+            }
+        })
+
+        // Allergy Section
+        $("#AllergyAdd").click(function(){
+            if(!editable) return;
+            var shtml = '<li><input type="text" value=""> </li>';
+            $("#Allergy").append(shtml);
+
+            // add focus listner at new item
+            $("#Allergy li input").focus(function(){
+                if(editable) {
+                    $("#Allergy li.selected").attr('class', '');
+                    $(this).parent().attr('class', 'selected');
+                }
+            })
+
+            $("#Allergy li:last-child input").focus();
+        })
+
+        $("#AllergyDel").click(function(){
+            if(!editable) return;
+            $("#Allergy li.selected").remove();
+
+        })
+
+        $("#Allergy li input").focus(function(){
+            if(editable) {
+                $("#Allergy li.selected").attr('class', '');
+                $(this).parent().attr('class', 'selected');
+            }
+        })
+
+        // Emergency Action Section
+        // Append New Item
+        $("#EmergActAdd").click(function(){
+            if(!editable) return;
+            var shtml = '<li><input type="text" value=""> </li>';
+            $("#EmergAct").append(shtml);
+
+            // add focus listner at new item
+            $("#EmergAct li input").focus(function(){
+                if(editable) {
+                    $("#EmergAct li.selected").attr('class', '');
+                    $(this).parent().attr('class', 'selected');
+                }
+            })
+
+            $("#EmergAct li:last-child input").focus();
+        })
+        // Delete Selected Item
+        $("#EmergActDel").click(function(){
+            if(!editable) return;
+            $("#EmergAct li.selected").remove();
+        })
+
+        // Change Selection States
+        $("#EmergAct li input").focus(function(){
+            if(editable) {
+                $("#EmergAct li.selected").attr('class', '');
+                $(this).parent().attr('class', 'selected');
+            }
+        })
+        // Physical problems/Diseases Section
+        // Append New Item
+        $("#PhysProbAdd").click(function(){
+            if(!editable) return;
+            var shtml = '<li><input type="text" value=""> </li>';
+            $("#PhysProb").append(shtml);
+
+            // add focus listner at new item
+            $("#PhysProb li input").focus(function(){
+                if(editable) {
+                    $("#PhysProb li.selected").attr('class', '');
+                    $(this).parent().attr('class', 'selected');
+                }
+            })
+
+            $("#PhysProb li:last-child input").focus();
+        })
+        // Delete Selected Item
+        $("#PhysProbDel").click(function(){
+            if(!editable) return;
+            $("#PhysProb li.selected").remove();
+
+        })
+        // Change Selection States
+        $("#PhysProb li input").focus(function(){
+            if(editable) {
+                $("#PhysProb li.selected").attr('class', '');
+                $(this).parent().attr('class', 'selected');
+            }
+        })
+        // Special Accomodations needed Section
+        // Append New Item
+        $("#SpecAccomAdd").click(function(){
+            if(!editable) return;
+            var shtml = '<li><input type="text" value=""> </li>';
+            $("#SpecAccom").append(shtml);
+
+            // add focus listner at new item
+            $("#SpecAccom li input").focus(function(){
+                if(editable) {
+                    $("#SpecAccom li.selected").attr('class', '');
+                    $(this).parent().attr('class', 'selected');
+                }
+            })
+
+            $("#SpecAccom li:last-child input").focus();
+        })
+        // Delete Selected Item
+        $("#SpecAccomDel").click(function(){
+            if(!editable) return;
+            $("#SpecAccom li.selected").remove();
+
+        })
+        // Change Selection States
+        $("#SpecAccom li input").focus(function(){
+            if(editable) {
+                $("#SpecAccom li.selected").attr('class', '');
+                $(this).parent().attr('class', 'selected');
+            }
+        })
+        // Special Instructions to Provider Section
+        // Append New Item
+        $("#SpecInsProvAdd").click(function(){
+            if(!editable) return;
+            var shtml = '<li><input type="text" value=""> </li>';
+            $("#SpecInsProv").append(shtml);
+
+            // add focus listner at new item
+            $("#SpecInsProv li input").focus(function(){
+                if(editable) {
+                    $("#SpecInsProv li.selected").attr('class', '');
+                    $(this).parent().attr('class', 'selected');
+                }
+            })
+
+            $("#SpecInsProv li:last-child input").focus();
+        })
+        // Delete Selected Item
+        $("#SpecInsProvDel").click(function(){
+            if(!editable) return;
+            $("#SpecInsProv li.selected").remove();
+
+        })
+        // Change Selection States
+        $("#SpecInsProv li input").focus(function(){
+            if(editable) {
+                $("#SpecInsProv li.selected").attr('class', '');
+                $(this).parent().attr('class', 'selected');
+            }
+        })
+
+        // when change child's name
+        $("#inpNickname").change(function(){
+            var ss = $("#inpName").val().split(' ');
+
+            $("#childName").text($("#inpNickname").val() + ' ' + ss[1]);
+        })
+
+        // switching icon
+        $("div.row.btn").click(function(){
+            var state = $(this).find("i").attr("class").split(" ");
+            if(state[1] == 'glyphicon-triangle-right')
+                $(this).find("i").attr("class", "glyphicon glyphicon-triangle-bottom");
+            else
+                $(this).find("i").attr("class", "glyphicon glyphicon-triangle-right");
+        })
+
+        // when press button Photo
+        $("#btnCamera").click(function(){
+            photo_dialog.dialog("open");
+        })
+
+        // when press photo select button
+        $("#photo-selector").change(function(){
+            var selector = $("#photo-selector");
+            if(selector[0].files && selector[0].files[0]){
+                var reader = new FileReader();
+                reader.readAsDataURL(selector[0].files[0]);
+                reader.onload = function (e) {
+                    $('#photo').attr('src', e.target.result);
+                }
+            }
+        })
+
+	</script>
+
+</body>
+
+</html>
+
